@@ -1,5 +1,9 @@
 ---
 import '../styles/global.css';
+// Self-hosted fonts (Fontsource). Variable fonts cover all weights in one file.
+import '@fontsource-variable/fraunces';
+import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource/pacifico';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
@@ -95,17 +99,8 @@ const preloadSet = preloadImage ? preloadSrcset(preloadImage) : null;
     <!-- Structured data (JSON-LD) for rich search results -->
     <StructuredData type={structuredData} listing={listing} />
 
-    <!-- Fonts loaded async — never blocks rendering -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preload" as="style"
-      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    </noscript>
+    <!-- Fonts are self-hosted via Fontsource (imported in the frontmatter
+         above and bundled by Astro) — no third-party requests. -->
 
     <!-- Smooth SPA-style page transitions -->
     <ViewTransitions />

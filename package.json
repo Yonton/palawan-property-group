@@ -11,6 +11,9 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource-variable/fraunces": "^5.0.0",
+    "@fontsource-variable/plus-jakarta-sans": "^5.0.0",
+    "@fontsource/pacifico": "^5.0.0",
     "astro": "^4.16.0"
   },
   "devDependencies": {
