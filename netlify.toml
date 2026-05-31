@@ -1,0 +1,46 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# ── Image CDN ──────────────────────────────────────────────────────────────────
+# Netlify automatically serves WebP/AVIF to browsers that support them.
+# No code changes needed — it intercepts image requests transparently.
+[images]
+  remote_images = ["https://i.ytimg.com/.*"]
+
+# ── Caching headers ────────────────────────────────────────────────────────────
+# Immutable cache for hashed assets (JS/CSS built by Astro)
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Long cache for images (update filenames to bust cache when photos change)
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000, stale-while-revalidate=86400"
+
+# Fonts
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ── Security headers ───────────────────────────────────────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# ── Redirects ──────────────────────────────────────────────────────────────────
+# www → non-www (Netlify handles this automatically when using Netlify DNS,
+# but this explicit redirect is a safety net)
+[[redirects]]
+  from = "https://www.palawanpropertygroup.com/*"
+  to = "https://palawanpropertygroup.com/:splat"
+  status = 301
+  force = true

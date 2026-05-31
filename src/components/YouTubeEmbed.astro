@@ -1,0 +1,112 @@
+---
+interface Props {
+  video: string;
+  title?: string;
+}
+const { video, title = 'Property video' } = Astro.props;
+
+function extractId(input: string): string {
+  if (!input.includes('http')) return input;
+  try {
+    const url = new URL(input);
+    if (url.hostname.includes('youtu.be')) return url.pathname.slice(1);
+    return url.searchParams.get('v') ?? input;
+  } catch {
+    return input;
+  }
+}
+const id = extractId(video);
+const thumb = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+---
+
+<div class="yt" data-id={id}>
+  <button class="yt-btn" aria-label={`Play ${title}`}>
+    <img src={thumb} alt={title} loading="lazy" />
+    <span class="yt-play" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor">
+        <path d="M8 5v14l11-7z" />
+      </svg>
+    </span>
+  </button>
+</div>
+
+<style>
+  .yt {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #000;
+    box-shadow: var(--shadow);
+    /* Ensure the container never collapses */
+    min-height: 180px;
+  }
+  .yt-btn {
+    all: unset;
+    cursor: pointer;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .yt-btn img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s var(--ease), opacity 0.3s var(--ease);
+  }
+  .yt-btn:hover img {
+    transform: scale(1.04);
+    opacity: 0.88;
+  }
+  .yt-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: rgba(19, 181, 234, 0.92);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    padding-left: 4px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    transition: transform 0.25s var(--ease), background 0.25s var(--ease);
+    pointer-events: none;
+  }
+  .yt-btn:hover .yt-play {
+    transform: translate(-50%, -50%) scale(1.12);
+    background: var(--c-sky);
+  }
+  /* The iframe fills the container perfectly after click */
+  .yt iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: var(--radius);
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.yt').forEach((el) => {
+    const btn = el.querySelector('.yt-btn');
+    btn?.addEventListener('click', () => {
+      const id = (el as HTMLElement).dataset.id;
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.title = 'Property video';
+      // Keep the container, just swap its children
+      el.innerHTML = '';
+      el.appendChild(iframe);
+    });
+  });
+</script>

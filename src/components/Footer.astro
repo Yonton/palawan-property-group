@@ -1,0 +1,184 @@
+---
+import Logo from './Logo.astro';
+import { company, contact, nav, site, whatsappLink } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <Logo width={210} animated={false} class="footer-logo" />
+      <p class="footer-tagline">{site.tagline}</p>
+      <p class="footer-based">
+        Locally owned and operated in {company.basedIn}.
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h3 class="footer-heading">Explore</h3>
+      <ul>
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3 class="footer-heading">Contact</h3>
+      <ul class="footer-contact">
+        {
+          contact.phones.map((p) => (
+            <li>
+              <a href={whatsappLink(p.e164)} target="_blank" rel="noopener">
+                {p.display} <span class="net">{p.label}</span>
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a href={`mailto:${contact.email}`}>{contact.email}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3 class="footer-heading">Office</h3>
+      <p class="footer-hours">{contact.officeHours}</p>
+      <div class="footer-licence">
+        <p>{company.broker.name}</p>
+        <p class="muted">{company.broker.title}</p>
+        <p class="muted">{company.broker.license}</p>
+      </div>
+      <div class="footer-licence">
+        <p>{company.salesperson.name}</p>
+        <p class="muted">{company.salesperson.title}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>© {year} {site.name}. All rights reserved.</p>
+    <p class="footer-credit">Your slice of paradise awaits.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--c-navy-deep);
+    color: rgba(255, 255, 255, 0.78);
+    padding-block: clamp(3rem, 6vw, 5rem) 2rem;
+    margin-top: auto;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1.2fr 1.4fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .footer-logo {
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-tagline {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-based {
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .footer-heading {
+    color: #fff;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 1.1rem;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .footer-col a {
+    color: rgba(255, 255, 255, 0.78);
+    transition: color 0.2s var(--ease);
+    font-size: 0.95rem;
+  }
+
+  .footer-col a:hover {
+    color: var(--c-sun-light);
+  }
+
+  .footer-contact .net {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-pill);
+    padding: 0.1rem 0.5rem;
+    margin-left: 0.35rem;
+  }
+
+  .footer-hours {
+    font-size: 0.95rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-licence {
+    font-size: 0.9rem;
+    margin-bottom: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .footer-licence p {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .footer-licence .muted {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.84rem;
+  }
+
+  .footer-bottom {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .footer-credit {
+    font-family: var(--font-display);
+    font-style: italic;
+  }
+
+  @media (max-width: 880px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,162 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PropertyCard from '../../components/PropertyCard.astro';
+
+const listings = (await getCollection('listings')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const types = Array.from(
+  new Set(listings.map((l) => l.data.propertyType))
+).sort();
+---
+
+<BaseLayout
+  title="Properties"
+  description="Browse beachfront estates, residential lots, commercial land and investment properties for sale in El Nido and across Palawan."
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow">Our portfolio</p>
+      <h1 class="page-title">Properties for sale in Palawan</h1>
+      <p class="lead">
+        Hand-picked beachfront, residential, and investment opportunities across
+        El Nido, Coron, and beyond. New listings added regularly.
+      </p>
+    </div>
+  </section>
+
+  <section class="section listings-body">
+    <div class="container">
+      <div class="filter-bar" role="group" aria-label="Filter by property type">
+        <button class="filter-chip active" data-filter="all">All</button>
+        {
+          types.map((t) => (
+            <button class="filter-chip" data-filter={t}>
+              {t}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="cards-grid" id="cardsGrid">
+        {
+          listings.map((listing) => (
+            <div class="card-wrap" data-type={listing.data.propertyType}>
+              <PropertyCard listing={listing} />
+            </div>
+          ))
+        }
+      </div>
+
+      <p class="empty-msg" id="emptyMsg" hidden>
+        No properties in this category yet — check back soon, or
+        <a href="/contact">tell us what you're looking for</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding-top: clamp(8rem, 14vw, 10rem);
+    padding-bottom: clamp(2rem, 4vw, 3rem);
+    background: linear-gradient(180deg, var(--c-surface-3), var(--c-surface));
+  }
+
+  .page-title {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    margin-block: 0.5rem 1rem;
+  }
+
+  .listings-body {
+    padding-top: 1rem;
+  }
+
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .filter-chip {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--c-navy);
+    background: var(--c-surface-2);
+    border: 1px solid var(--c-line);
+    padding: 0.55rem 1.2rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all 0.2s var(--ease);
+  }
+
+  .filter-chip:hover {
+    border-color: var(--c-sky);
+    color: var(--c-sky-deep);
+  }
+
+  .filter-chip.active {
+    background: var(--c-sky);
+    color: #fff;
+    border-color: var(--c-sky);
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+  }
+
+  .card-wrap.hidden {
+    display: none;
+  }
+
+  .empty-msg {
+    text-align: center;
+    color: var(--c-muted);
+    padding: 3rem 1rem;
+  }
+
+  .empty-msg a {
+    color: var(--c-sky-deep);
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 980px) {
+    .cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('.filter-chip');
+  const cards = document.querySelectorAll<HTMLElement>('.card-wrap');
+  const empty = document.getElementById('emptyMsg');
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      chips.forEach((c) => c.classList.remove('active'));
+      chip.classList.add('active');
+      const filter = chip.dataset.filter;
+      let visible = 0;
+      cards.forEach((card) => {
+        const show = filter === 'all' || card.dataset.type === filter;
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
+      });
+      if (empty) empty.hidden = visible !== 0;
+    });
+  });
+</script>

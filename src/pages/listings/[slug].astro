@@ -1,0 +1,464 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import YouTubeEmbed from '../../components/YouTubeEmbed.astro';
+import { formatPrice, contact, whatsappLink } from '../../data/site';
+import OptimizedImage from '../../components/OptimizedImage.astro';
+import PhotoGallery from '../../components/PhotoGallery.astro';
+
+export async function getStaticPaths() {
+  const listings = await getCollection('listings');
+  return listings.map((listing) => ({
+    params: { slug: listing.data.slug },
+    props: { listing },
+  }));
+}
+
+interface Props {
+  listing: CollectionEntry<'listings'>;
+}
+const { listing } = Astro.props;
+const d = listing.data;
+
+const waHref = whatsappLink(
+  contact.whatsappPrimary,
+  `Hi! I'm interested in "${d.title}" (${d.location}). Could you share more details?`
+);
+
+const keyFacts: { label: string; value: string }[] = [];
+if (d.lotSizeLabel) keyFacts.push({ label: 'Lot size', value: d.lotSizeLabel });
+if (d.beachfrontMeters)
+  keyFacts.push({ label: 'Beachfront', value: `${d.beachfrontMeters} meters` });
+if (d.bedrooms) keyFacts.push({ label: 'Bedrooms', value: String(d.bedrooms) });
+if (d.bathrooms)
+  keyFacts.push({ label: 'Bathrooms', value: String(d.bathrooms) });
+if (d.floorAreaSqm)
+  keyFacts.push({ label: 'Floor area', value: `${d.floorAreaSqm} sqm` });
+keyFacts.push({ label: 'Type', value: d.propertyType });
+---
+
+<BaseLayout
+  title={d.metaTitle ?? d.title}
+  description={d.metaDescription ?? d.shortDescription}
+  image={d.heroImage}
+  preloadImage={d.heroImage}
+>
+  <!-- ===== HERO ===== -->
+  <section class="detail-hero">
+    <OptimizedImage
+      src={d.heroImage}
+      alt={d.title}
+      width={1600}
+      height={900}
+      loading="eager"
+      fetchpriority="high"
+      sizes="100vw"
+      class="detail-hero-img"
+    />
+    <div class="detail-hero-scrim"></div>
+    <div class="container detail-hero-inner">
+      <a href="/listings" class="back-link">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M19 12H5M11 18l-6-6 6-6" />
+        </svg>
+        All properties
+      </a>
+      <span class="detail-type">{d.propertyType}</span>
+      <h1 class="detail-title">{d.title}</h1>
+      <p class="detail-loc">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z" />
+          <circle cx="12" cy="10" r="2.5" />
+        </svg>
+        {d.location}
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== KEY FACTS BAR ===== -->
+  <section class="facts-bar">
+    <div class="container facts-inner">
+      <div class="facts-list">
+        {
+          keyFacts.map((f) => (
+            <div class="fact">
+              <span class="fact-value">{f.value}</span>
+              <span class="fact-label">{f.label}</span>
+            </div>
+          ))
+        }
+      </div>
+      <div class="facts-price">
+        <span class="price-amount">
+          {formatPrice(d.price, d.priceLabel, d.currency)}
+        </span>
+        <a href={waHref} class="btn btn-sun" target="_blank" rel="noopener">
+          Inquire now
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BODY ===== -->
+  <section class="section detail-body">
+    <div class="container detail-grid">
+      <div class="detail-main">
+        <p class="eyebrow">About this property</p>
+        <h2 class="block-title">{d.shortDescription}</h2>
+        {d.description.map((para) => <p class="detail-para">{para}</p>)}
+
+        {d.gallery.length > 0 && (
+          <PhotoGallery images={d.gallery} title={d.title} />
+        )}
+
+        {
+          d.highlights.length > 0 && (
+            <div class="block">
+              <h3 class="sub-title">Investment highlights</h3>
+              <ul class="check-list">
+                {d.highlights.map((h) => (
+                  <li>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                      <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                    {h}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+
+        {
+          d.utilities.length > 0 && (
+            <div class="block">
+              <h3 class="sub-title">Utilities &amp; infrastructure</h3>
+              <ul class="dot-list">
+                {d.utilities.map((u) => <li>{u}</li>)}
+              </ul>
+            </div>
+          )
+        }
+
+        {
+          d.accessNotes.length > 0 && (
+            <div class="block">
+              <h3 class="sub-title">Location &amp; access</h3>
+              <ul class="dot-list">
+                {d.accessNotes.map((a) => <li>{a}</li>)}
+              </ul>
+            </div>
+          )
+        }
+
+        {
+          d.youtube.length > 0 && (
+            <div class="block">
+              <h3 class="sub-title">Aerial &amp; video tour</h3>
+              <div class="video-grid">
+                {d.youtube.map((v, i) => (
+                  <YouTubeEmbed video={v} title={`${d.title} — video ${i + 1}`} />
+                ))}
+              </div>
+            </div>
+          )
+        }
+      </div>
+
+      <!-- Sticky inquiry sidebar -->
+      <aside class="detail-aside">
+        <div class="inquiry-card">
+          <p class="inquiry-price">
+            {formatPrice(d.price, d.priceLabel, d.currency)}
+          </p>
+          <p class="inquiry-sub">{d.location}</p>
+          <a href={waHref} class="btn btn-primary inquiry-btn" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.004c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01zm-7.01 15.24h-.004a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23a8.2 8.2 0 0 1 5.82 2.41 8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.4-8.24 8.4z" />
+            </svg>
+            WhatsApp inquiry
+          </a>
+          <a href="/contact" class="btn btn-ghost inquiry-btn">Send a message</a>
+          <div class="inquiry-contacts">
+            <p class="inquiry-label">Or call / message us</p>
+            {
+              contact.phones.map((p) => (
+                <a class="inquiry-phone" href={whatsappLink(p.e164)} target="_blank" rel="noopener">
+                  {p.display} <span>{p.label}</span>
+                </a>
+              ))
+            }
+            <a class="inquiry-phone" href={`mailto:${contact.email}`}>
+              {contact.email}
+            </a>
+          </div>
+          <p class="inquiry-hours">{contact.officeHours}</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ===== HERO ===== */
+  .detail-hero {
+    position: relative;
+    min-height: clamp(420px, 60vh, 620px);
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  .detail-hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .detail-hero-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(12, 42, 82, 0.9) 0%,
+      rgba(12, 42, 82, 0.3) 55%,
+      rgba(12, 42, 82, 0.45) 100%
+    );
+  }
+  .detail-hero-inner {
+    position: relative;
+    padding-bottom: clamp(2rem, 5vw, 3.5rem);
+    padding-top: 9rem;
+    color: #fff;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 1.2rem;
+    transition: gap 0.2s var(--ease);
+  }
+  .back-link:hover {
+    gap: 0.65rem;
+    color: #fff;
+  }
+  .detail-type {
+    display: inline-block;
+    background: var(--c-sun);
+    color: #fff;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-pill);
+    margin-bottom: 1rem;
+  }
+  .detail-title {
+    color: #fff;
+    font-size: clamp(2.1rem, 5vw, 3.6rem);
+    max-width: 20ch;
+    margin-bottom: 0.7rem;
+  }
+  .detail-loc {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    font-size: 1.05rem;
+  }
+
+  /* ===== FACTS BAR ===== */
+  .facts-bar {
+    background: var(--c-navy);
+    color: #fff;
+  }
+  .facts-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-block: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .facts-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+  .fact {
+    display: flex;
+    flex-direction: column;
+  }
+  .fact-value {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #fff;
+  }
+  .fact-label {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .facts-price {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+  .price-amount {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: var(--c-sun-light);
+  }
+
+  /* ===== BODY GRID ===== */
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+  .block-title {
+    font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+    color: var(--c-ink);
+    margin-block: 0.6rem 1.5rem;
+    line-height: 1.3;
+  }
+  .detail-para {
+    margin-bottom: 1.2rem;
+    color: var(--c-body);
+  }
+  .block {
+    margin-top: 2.8rem;
+  }
+  .sub-title {
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+    color: var(--c-ink);
+  }
+  .check-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem 1.5rem;
+  }
+  .check-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    color: var(--c-body);
+    font-size: 0.97rem;
+  }
+  .check-list svg {
+    color: var(--c-green);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .dot-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .dot-list li {
+    position: relative;
+    padding-left: 1.4rem;
+    color: var(--c-body);
+  }
+  .dot-list li::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0.6rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--c-sky);
+  }
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  /* ===== ASIDE ===== */
+  .detail-aside {
+    position: sticky;
+    top: 6.5rem;
+  }
+  .inquiry-card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: var(--shadow);
+  }
+  .inquiry-price {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: var(--c-navy);
+  }
+  .inquiry-sub {
+    color: var(--c-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.4rem;
+  }
+  .inquiry-btn {
+    width: 100%;
+    margin-bottom: 0.7rem;
+  }
+  .inquiry-contacts {
+    margin-top: 1.4rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--c-line);
+  }
+  .inquiry-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-muted);
+    margin-bottom: 0.8rem;
+  }
+  .inquiry-phone {
+    display: block;
+    color: var(--c-navy);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.35rem 0;
+    transition: color 0.2s var(--ease);
+  }
+  .inquiry-phone span {
+    font-size: 0.72rem;
+    color: var(--c-muted);
+    font-weight: 500;
+    margin-left: 0.3rem;
+  }
+  .inquiry-phone:hover {
+    color: var(--c-sky-deep);
+  }
+  .inquiry-hours {
+    margin-top: 1.2rem;
+    font-size: 0.85rem;
+    color: var(--c-muted);
+  }
+
+  @media (max-width: 940px) {
+    .detail-grid {
+      grid-template-columns: 1fr;
+    }
+    .detail-aside {
+      position: static;
+    }
+    .check-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

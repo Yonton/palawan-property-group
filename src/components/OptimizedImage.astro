@@ -1,0 +1,46 @@
+---
+// OptimizedImage.astro — wrapper that adds all performance attributes.
+// CSS in the parent controls actual display size — width/height here are
+// just hints for the browser to reserve layout space (prevents CLS).
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  sizes?: string;
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  class: className = '',
+  loading = 'lazy',
+  fetchpriority = 'auto',
+  sizes,
+} = Astro.props;
+---
+
+<img
+  src={src}
+  alt={alt}
+  width={width}
+  height={height}
+  class={className}
+  loading={loading}
+  fetchpriority={fetchpriority}
+  sizes={sizes}
+  decoding="async"
+/>
+
+<style>
+  img {
+    /* Never let intrinsic width/height override CSS layout */
+    max-width: 100%;
+    height: auto;
+  }
+</style>

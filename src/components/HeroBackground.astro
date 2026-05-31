@@ -1,0 +1,279 @@
+---
+// Lightweight animated tropical background for the hero section.
+// Pure CSS animations only — no JS, no canvas, no heavy libraries.
+// Falls back to a static gradient with prefers-reduced-motion.
+---
+
+<div class="tropic-bg" aria-hidden="true">
+  <!-- Sky gradient layer -->
+  <div class="tropic-sky"></div>
+
+  <!-- Animated sun with rays -->
+  <div class="tropic-sun">
+    <div class="sun-core"></div>
+    <div class="sun-rays">
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="sun-halo"></div>
+  </div>
+
+  <!-- Floating bokeh dots (light caustics effect) -->
+  <div class="bokeh">
+    <span class="b b1"></span>
+    <span class="b b2"></span>
+    <span class="b b3"></span>
+    <span class="b b4"></span>
+    <span class="b b5"></span>
+    <span class="b b6"></span>
+    <span class="b b7"></span>
+    <span class="b b8"></span>
+  </div>
+
+  <!-- Rolling ocean waves (3 layers for depth) -->
+  <div class="wave-container">
+    <svg class="wave wave1" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,60 C180,100 360,20 540,60 C720,100 900,20 1080,60 C1260,100 1380,40 1440,60 L1440,120 L0,120 Z" />
+    </svg>
+    <svg class="wave wave2" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C200,90 400,10 600,50 C800,90 1000,10 1200,50 C1320,70 1400,30 1440,50 L1440,120 L0,120 Z" />
+    </svg>
+    <svg class="wave wave3" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,70 C160,30 320,90 480,60 C640,30 800,90 960,60 C1120,30 1300,80 1440,55 L1440,120 L0,120 Z" />
+    </svg>
+  </div>
+
+  <!-- Silhouette palm trees (SVG, pure CSS animation) -->
+  <svg class="palms" viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+    <!-- Left large palm -->
+    <g class="palm palm-l1">
+      <path d="M80 400 Q70 320 60 270 Q50 220 45 170" stroke="#0a2a4a" stroke-width="9" fill="none" stroke-linecap="round"/>
+      <path d="M45 170 Q10 145 -20 155 Q15 162 45 170Z" fill="#0a2a4a"/>
+      <path d="M45 170 Q28 130 35 110 Q40 145 45 170Z" fill="#0c3158"/>
+      <path d="M45 170 Q70 140 90 148 Q66 158 45 170Z" fill="#0a2a4a"/>
+      <path d="M45 170 Q80 162 96 175 Q70 170 45 170Z" fill="#0c3158"/>
+      <path d="M45 170 Q6 172 -8 184 Q22 176 45 170Z" fill="#0a2a4a"/>
+    </g>
+    <!-- Left small palm -->
+    <g class="palm palm-l2">
+      <path d="M160 400 Q155 345 150 305 Q144 265 140 230" stroke="#0a2a4a" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <path d="M140 230 Q112 215 96 222 Q118 225 140 230Z" fill="#0a2a4a"/>
+      <path d="M140 230 Q128 205 132 192 Q136 212 140 230Z" fill="#0c3158"/>
+      <path d="M140 230 Q158 210 170 216 Q155 222 140 230Z" fill="#0a2a4a"/>
+      <path d="M140 230 Q162 228 172 238 Q156 232 140 230Z" fill="#0c3158"/>
+    </g>
+    <!-- Right large palm -->
+    <g class="palm palm-r1">
+      <path d="M1360 400 Q1370 320 1380 270 Q1390 220 1395 170" stroke="#0a2a4a" stroke-width="9" fill="none" stroke-linecap="round"/>
+      <path d="M1395 170 Q1430 145 1460 155 Q1425 162 1395 170Z" fill="#0a2a4a"/>
+      <path d="M1395 170 Q1412 130 1405 110 Q1400 145 1395 170Z" fill="#0c3158"/>
+      <path d="M1395 170 Q1370 140 1350 148 Q1374 158 1395 170Z" fill="#0a2a4a"/>
+      <path d="M1395 170 Q1360 162 1344 175 Q1370 170 1395 170Z" fill="#0c3158"/>
+      <path d="M1395 170 Q1434 172 1448 184 Q1418 176 1395 170Z" fill="#0a2a4a"/>
+    </g>
+    <!-- Right small palm -->
+    <g class="palm palm-r2">
+      <path d="M1280 400 Q1285 345 1290 305 Q1296 265 1300 230" stroke="#0a2a4a" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <path d="M1300 230 Q1328 215 1344 222 Q1322 225 1300 230Z" fill="#0a2a4a"/>
+      <path d="M1300 230 Q1312 205 1308 192 Q1304 212 1300 230Z" fill="#0c3158"/>
+      <path d="M1300 230 Q1282 210 1270 216 Q1285 222 1300 230Z" fill="#0a2a4a"/>
+      <path d="M1300 230 Q1278 228 1268 238 Q1284 232 1300 230Z" fill="#0c3158"/>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .tropic-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  /* ---- Sky gradient ---- */
+  .tropic-sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      175deg,
+      #0a1f3c 0%,
+      #0d2d52 25%,
+      #0e4d7a 50%,
+      #0e7eaa 75%,
+      #0d9fc2 100%
+    );
+    animation: skyShift 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes skyShift {
+    0%   { filter: hue-rotate(0deg) brightness(1); }
+    50%  { filter: hue-rotate(8deg) brightness(1.06); }
+    100% { filter: hue-rotate(-4deg) brightness(0.96); }
+  }
+
+  /* ---- Sun ---- */
+  .tropic-sun {
+    position: absolute;
+    top: 12%;
+    right: 18%;
+    width: 160px;
+    height: 160px;
+  }
+
+  .sun-halo {
+    position: absolute;
+    inset: -40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,210,60,0.25) 0%, transparent 70%);
+    animation: haloBreath 6s ease-in-out infinite;
+  }
+
+  .sun-core {
+    position: absolute;
+    inset: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 36%, #fff8cc, #ffd23f 40%, #ff9e12 80%, #f46e00);
+    animation: sunPulse 6s ease-in-out infinite;
+    box-shadow: 0 0 40px rgba(255,180,30,0.5), 0 0 80px rgba(255,150,0,0.25);
+  }
+
+  .sun-rays {
+    position: absolute;
+    inset: 0;
+    animation: raysSpin 30s linear infinite;
+  }
+
+  .sun-rays span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 3px;
+    height: 80px;
+    margin-left: -1.5px;
+    transform-origin: 50% 100%;
+    background: linear-gradient(to top, rgba(255,210,60,0.7), transparent);
+    border-radius: 3px;
+  }
+
+  .sun-rays span:nth-child(1) { transform: rotate(0deg) translateY(-100%); }
+  .sun-rays span:nth-child(2) { transform: rotate(45deg) translateY(-100%); }
+  .sun-rays span:nth-child(3) { transform: rotate(90deg) translateY(-100%); }
+  .sun-rays span:nth-child(4) { transform: rotate(135deg) translateY(-100%); }
+  .sun-rays span:nth-child(5) { transform: rotate(180deg) translateY(-100%); }
+  .sun-rays span:nth-child(6) { transform: rotate(225deg) translateY(-100%); }
+  .sun-rays span:nth-child(7) { transform: rotate(270deg) translateY(-100%); }
+  .sun-rays span:nth-child(8) { transform: rotate(315deg) translateY(-100%); }
+
+  @keyframes sunPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(255,180,30,0.5); }
+    50%       { transform: scale(1.05); box-shadow: 0 0 60px rgba(255,180,30,0.7); }
+  }
+  @keyframes raysSpin {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes haloBreath {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50%       { transform: scale(1.15); opacity: 1; }
+  }
+
+  /* ---- Bokeh / light particles ---- */
+  .bokeh {
+    position: absolute;
+    inset: 0;
+  }
+
+  .b {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    animation: floatUp var(--dur, 12s) ease-in-out var(--delay, 0s) infinite;
+  }
+
+  .b1  { width: 8px;  height: 8px;  left: 12%; bottom: 20%; --dur: 14s; --delay: 0s; }
+  .b2  { width: 5px;  height: 5px;  left: 28%; bottom: 35%; --dur: 11s; --delay: 2s; }
+  .b3  { width: 10px; height: 10px; left: 45%; bottom: 15%; --dur: 16s; --delay: 1s; }
+  .b4  { width: 6px;  height: 6px;  left: 62%; bottom: 28%; --dur: 13s; --delay: 4s; }
+  .b5  { width: 8px;  height: 8px;  left: 75%; bottom: 22%; --dur: 10s; --delay: 0.5s; }
+  .b6  { width: 4px;  height: 4px;  left: 88%; bottom: 40%; --dur: 15s; --delay: 3s; }
+  .b7  { width: 7px;  height: 7px;  left: 35%; bottom: 50%; --dur: 18s; --delay: 1.5s; }
+  .b8  { width: 5px;  height: 5px;  left: 55%; bottom: 60%; --dur: 12s; --delay: 6s; }
+
+  @keyframes floatUp {
+    0%   { transform: translateY(0) scale(1); opacity: 0; }
+    10%  { opacity: 1; }
+    80%  { opacity: 0.6; }
+    100% { transform: translateY(-200px) scale(0.6); opacity: 0; }
+  }
+
+  /* ---- Waves ---- */
+  .wave-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+  }
+
+  .wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+  }
+
+  .wave1 path { fill: rgba(13, 159, 194, 0.35); }
+  .wave2 path { fill: rgba(19, 181, 234, 0.25); }
+  .wave3 path { fill: rgba(10, 120, 180, 0.18); }
+
+  .wave1 { animation: waveDrift 14s linear infinite; }
+  .wave2 { animation: waveDrift 10s linear infinite reverse; }
+  .wave3 { animation: waveDrift 18s linear infinite; }
+
+  @keyframes waveDrift {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ---- Palm silhouettes (sway) ---- */
+  .palm-l1 { transform-origin: 80px 400px; animation: swayL 8s ease-in-out infinite; }
+  .palm-l2 { transform-origin: 160px 400px; animation: swayL 10s ease-in-out infinite 1s; }
+  .palm-r1 { transform-origin: 1360px 400px; animation: swayR 9s ease-in-out infinite 0.5s; }
+  .palm-r2 { transform-origin: 1280px 400px; animation: swayR 11s ease-in-out infinite 2s; }
+
+  @keyframes swayL {
+    0%, 100% { transform: rotate(0deg); }
+    50%       { transform: rotate(-2.5deg); }
+  }
+  @keyframes swayR {
+    0%, 100% { transform: rotate(0deg); }
+    50%       { transform: rotate(2.5deg); }
+  }
+
+  .palms {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 55%;
+    pointer-events: none;
+  }
+
+  /* ---- Reduced motion ---- */
+  @media (prefers-reduced-motion: reduce) {
+    .tropic-sky,
+    .sun-core,
+    .sun-halo,
+    .sun-rays,
+    .b,
+    .wave1,
+    .wave2,
+    .wave3,
+    .palm-l1,
+    .palm-l2,
+    .palm-r1,
+    .palm-r2 {
+      animation: none !important;
+    }
+  }
+</style>

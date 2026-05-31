@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://palawanpropertygroup.com/sitemap-index.xml
