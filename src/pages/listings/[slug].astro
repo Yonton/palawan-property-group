@@ -5,20 +5,36 @@ import YouTubeEmbed from '../../components/YouTubeEmbed.astro';
 import { formatPrice, contact, whatsappLink } from '../../data/site';
 import OptimizedImage from '../../components/OptimizedImage.astro';
 import PhotoGallery from '../../components/PhotoGallery.astro';
+import PropertyCard from '../../components/PropertyCard.astro';
 
 export async function getStaticPaths() {
   const listings = await getCollection('listings');
   return listings.map((listing) => ({
     params: { slug: listing.data.slug },
-    props: { listing },
+    props: { listing, all: listings },
   }));
 }
 
 interface Props {
   listing: CollectionEntry<'listings'>;
+  all: CollectionEntry<'listings'>[];
 }
-const { listing } = Astro.props;
+const { listing, all } = Astro.props;
 const d = listing.data;
+
+// Related: same type first, then fill from others, never the current one
+const related = (() => {
+  const others = all.filter((l) => l.data.slug !== d.slug);
+  const sameType = others.filter((l) => l.data.propertyType === d.propertyType);
+  const rest = others.filter((l) => l.data.propertyType !== d.propertyType);
+  return [...sameType, ...rest]
+    .sort((a, b) => a.data.order - b.data.order)
+    .slice(0, 3);
+})();
+
+const mapsQuery = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  d.location
+)}`;
 
 const waHref = whatsappLink(
   contact.whatsappPrimary,
@@ -42,6 +58,8 @@ keyFacts.push({ label: 'Type', value: d.propertyType });
   description={d.metaDescription ?? d.shortDescription}
   image={d.heroImage}
   preloadImage={d.heroImage}
+  structuredData="listing"
+  listing={listing}
 >
   <!-- ===== HERO ===== -->
   <section class="detail-hero">
@@ -54,6 +72,7 @@ keyFacts.push({ label: 'Type', value: d.propertyType });
       fetchpriority="high"
       sizes="100vw"
       class="detail-hero-img"
+      transitionName={`hero-${d.slug}`}
     />
     <div class="detail-hero-scrim"></div>
     <div class="container detail-hero-inner">
@@ -147,6 +166,18 @@ keyFacts.push({ label: 'Type', value: d.propertyType });
               <ul class="dot-list">
                 {d.accessNotes.map((a) => <li>{a}</li>)}
               </ul>
+              <a
+                class="maps-link"
+                href={mapsQuery}
+                target="_blank"
+                rel="noopener"
+              >
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z" />
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+                View area on Google Maps
+              </a>
             </div>
           )
         }
@@ -179,6 +210,15 @@ keyFacts.push({ label: 'Type', value: d.propertyType });
             WhatsApp inquiry
           </a>
           <a href="/contact" class="btn btn-ghost inquiry-btn">Send a message</a>
+          <button class="btn btn-ghost inquiry-btn share-btn" id="shareBtn" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="18" cy="5" r="3" />
+              <circle cx="6" cy="12" r="3" />
+              <circle cx="18" cy="19" r="3" />
+              <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" />
+            </svg>
+            <span class="share-label">Share this property</span>
+          </button>
           <div class="inquiry-contacts">
             <p class="inquiry-label">Or call / message us</p>
             {
@@ -197,6 +237,27 @@ keyFacts.push({ label: 'Type', value: d.propertyType });
       </aside>
     </div>
   </section>
+
+  {
+    related.length > 0 && (
+      <section class="section related-section">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow reveal">Keep exploring</p>
+              <h2 class="related-title reveal">Other properties you may like</h2>
+            </div>
+            <a href="/listings" class="btn btn-ghost reveal">View all properties</a>
+          </div>
+          <div class="related-grid">
+            {related.map((l) => (
+              <PropertyCard listing={l} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 </BaseLayout>
 
 <style>
@@ -461,4 +522,91 @@ keyFacts.push({ label: 'Type', value: d.propertyType });
       grid-template-columns: 1fr;
     }
   }
+
+  /* ===== MAPS LINK ===== */
+  .maps-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+    color: var(--c-sky-deep);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.5rem 0;
+    transition: gap 0.2s var(--ease);
+  }
+  .maps-link:hover {
+    gap: 0.8rem;
+  }
+
+  /* ===== SHARE BUTTON ===== */
+  .share-btn {
+    width: 100%;
+    cursor: pointer;
+  }
+  .share-btn.copied {
+    border-color: var(--c-green);
+    color: var(--c-green);
+  }
+
+  /* ===== RELATED ===== */
+  .related-section {
+    background: var(--c-sand);
+  }
+  .related-title {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    margin-bottom: 0;
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+  }
+  @media (max-width: 980px) {
+    .related-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
+
+<script>
+  function initShare() {
+    const btn = document.getElementById('shareBtn');
+    if (!btn || btn.dataset.bound) return;
+    btn.dataset.bound = 'true';
+    const label = btn.querySelector('.share-label');
+    const original = label?.textContent ?? 'Share this property';
+
+    btn.addEventListener('click', async () => {
+      const url = window.location.href;
+      const title = document.title;
+      // Prefer the native share sheet on mobile
+      if (navigator.share) {
+        try {
+          await navigator.share({ title, url });
+          return;
+        } catch {
+          /* user cancelled — fall through to copy */
+        }
+      }
+      try {
+        await navigator.clipboard.writeText(url);
+        if (label) label.textContent = 'Link copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          if (label) label.textContent = original;
+          btn.classList.remove('copied');
+        }, 2000);
+      } catch {
+        /* clipboard unavailable — no-op */
+      }
+    });
+  }
+  initShare();
+  document.addEventListener('astro:after-swap', initShare);
+</script>

@@ -253,74 +253,86 @@ if (!images || images.length === 0) return;
 </style>
 
 <script define:vars={{ images }}>
-  const lightbox  = document.getElementById('lightbox');
-  const lbImg     = document.getElementById('lbImg');
-  const lbPrev    = document.getElementById('lbPrev');
-  const lbNext    = document.getElementById('lbNext');
-  const lbClose   = document.getElementById('lbClose');
-  const lbCounter = document.getElementById('lbCounter');
-  const lbThumbs  = document.getElementById('lbThumbs');
-  const thumbBtns = lbThumbs?.querySelectorAll('.lb-thumb');
+  function initGallery() {
+    const lightbox  = document.getElementById('lightbox');
+    if (!lightbox || lightbox.dataset.bound) return;
+    lightbox.dataset.bound = 'true';
 
-  let current = 0;
+    const lbImg     = document.getElementById('lbImg');
+    const lbPrev    = document.getElementById('lbPrev');
+    const lbNext    = document.getElementById('lbNext');
+    const lbClose   = document.getElementById('lbClose');
+    const lbCounter = document.getElementById('lbCounter');
+    const lbThumbs  = document.getElementById('lbThumbs');
+    const thumbBtns = lbThumbs?.querySelectorAll('.lb-thumb');
 
-  function show(index) {
-    current = Math.max(0, Math.min(index, images.length - 1));
-    lbImg.src = images[current];
-    lbImg.alt = `Photo ${current + 1}`;
-    lbCounter.textContent = `${current + 1} / ${images.length}`;
-    lbPrev.disabled = current === 0;
-    lbNext.disabled = current === images.length - 1;
-    thumbBtns?.forEach((t, i) => t.classList.toggle('is-active', i === current));
-    // Scroll active thumb into view
-    thumbBtns?.[current]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    let current = 0;
+
+    function show(index) {
+      current = Math.max(0, Math.min(index, images.length - 1));
+      lbImg.src = images[current];
+      lbImg.alt = `Photo ${current + 1}`;
+      lbCounter.textContent = `${current + 1} / ${images.length}`;
+      lbPrev.disabled = current === 0;
+      lbNext.disabled = current === images.length - 1;
+      thumbBtns?.forEach((t, i) => t.classList.toggle('is-active', i === current));
+      thumbBtns?.[current]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+
+    function open(index) {
+      lightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+      show(index);
+      lbClose.focus();
+    }
+
+    function close() {
+      lightbox.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    // Open from grid
+    document.querySelectorAll('.gallery-thumb').forEach(btn => {
+      btn.addEventListener('click', () => open(Number(btn.dataset.index)));
+    });
+
+    // Lightbox controls
+    lbClose?.addEventListener('click', close);
+    lbPrev?.addEventListener('click', () => show(current - 1));
+    lbNext?.addEventListener('click', () => show(current + 1));
+
+    // Thumbnail nav
+    thumbBtns?.forEach(t => {
+      t.addEventListener('click', () => show(Number(t.dataset.index)));
+    });
+
+    // Click backdrop to close
+    lightbox?.addEventListener('click', (e) => {
+      if (e.target === lightbox) close();
+    });
+
+    // Keyboard nav
+    document.addEventListener('keydown', (e) => {
+      if (lightbox?.hidden) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+
+    // Touch/swipe support
+    let touchStartX = 0;
+    lightbox?.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    lightbox?.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) show(diff > 0 ? current + 1 : current - 1);
+    });
+
+    // Clean up the body scroll-lock before navigating away
+    document.addEventListener('astro:before-swap', () => {
+      document.body.style.overflow = '';
+    });
   }
 
-  function open(index) {
-    lightbox.hidden = false;
-    document.body.style.overflow = 'hidden';
-    show(index);
-    lbClose.focus();
-  }
-
-  function close() {
-    lightbox.hidden = true;
-    document.body.style.overflow = '';
-  }
-
-  // Open from grid
-  document.querySelectorAll('.gallery-thumb').forEach(btn => {
-    btn.addEventListener('click', () => open(Number(btn.dataset.index)));
-  });
-
-  // Lightbox controls
-  lbClose?.addEventListener('click', close);
-  lbPrev?.addEventListener('click', () => show(current - 1));
-  lbNext?.addEventListener('click', () => show(current + 1));
-
-  // Thumbnail nav
-  thumbBtns?.forEach(t => {
-    t.addEventListener('click', () => show(Number(t.dataset.index)));
-  });
-
-  // Click backdrop to close
-  lightbox?.addEventListener('click', (e) => {
-    if (e.target === lightbox) close();
-  });
-
-  // Keyboard nav
-  document.addEventListener('keydown', (e) => {
-    if (lightbox?.hidden) return;
-    if (e.key === 'Escape') close();
-    if (e.key === 'ArrowLeft') show(current - 1);
-    if (e.key === 'ArrowRight') show(current + 1);
-  });
-
-  // Touch/swipe support
-  let touchStartX = 0;
-  lightbox?.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-  lightbox?.addEventListener('touchend', e => {
-    const diff = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) show(diff > 0 ? current + 1 : current - 1);
-  });
+  initGallery();
+  document.addEventListener('astro:after-swap', initGallery);
 </script>

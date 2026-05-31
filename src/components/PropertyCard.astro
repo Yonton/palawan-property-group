@@ -27,6 +27,7 @@ if (d.bathrooms) specs.push({ label: 'Baths', value: String(d.bathrooms) });
         height={450}
         loading="lazy"
         sizes="(max-width:600px) 100vw, (max-width:980px) 50vw, 33vw"
+        transitionName={`hero-${d.slug}`}
       />
     </div>
     <span class="card-type">{d.propertyType}</span>

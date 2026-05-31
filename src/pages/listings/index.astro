@@ -10,6 +10,15 @@ const listings = (await getCollection('listings')).sort(
 const types = Array.from(
   new Set(listings.map((l) => l.data.propertyType))
 ).sort();
+
+// Count per type for chip badges
+const typeCounts = new Map<string, number>();
+for (const l of listings) {
+  typeCounts.set(
+    l.data.propertyType,
+    (typeCounts.get(l.data.propertyType) ?? 0) + 1
+  );
+}
 ---
 
 <BaseLayout
@@ -29,21 +38,42 @@ const types = Array.from(
 
   <section class="section listings-body">
     <div class="container">
-      <div class="filter-bar" role="group" aria-label="Filter by property type">
-        <button class="filter-chip active" data-filter="all">All</button>
-        {
-          types.map((t) => (
-            <button class="filter-chip" data-filter={t}>
-              {t}
-            </button>
-          ))
-        }
+      <div class="controls">
+        <div class="filter-bar" role="group" aria-label="Filter by property type">
+          <button class="filter-chip active" data-filter="all">
+            All <span class="chip-count">{listings.length}</span>
+          </button>
+          {
+            types.map((t) => (
+              <button class="filter-chip" data-filter={t}>
+                {t} <span class="chip-count">{typeCounts.get(t)}</span>
+              </button>
+            ))
+          }
+        </div>
+
+        <div class="sort-wrap">
+          <label for="sortSelect" class="sort-label">Sort</label>
+          <select id="sortSelect" class="sort-select">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: low to high</option>
+            <option value="price-desc">Price: high to low</option>
+          </select>
+        </div>
       </div>
+
+      <p class="result-count" id="resultCount" aria-live="polite"></p>
 
       <div class="cards-grid" id="cardsGrid">
         {
           listings.map((listing) => (
-            <div class="card-wrap" data-type={listing.data.propertyType}>
+            <div
+              class="card-wrap"
+              data-type={listing.data.propertyType}
+              data-order={listing.data.order}
+              data-price={listing.data.price ?? ''}
+              data-featured={listing.data.featured ? '1' : '0'}
+            >
               <PropertyCard listing={listing} />
             </div>
           ))
@@ -74,11 +104,19 @@ const types = Array.from(
     padding-top: 1rem;
   }
 
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+
   .filter-bar {
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
-    margin-bottom: 2.5rem;
   }
 
   .filter-chip {
@@ -92,6 +130,9 @@ const types = Array.from(
     border-radius: var(--radius-pill);
     cursor: pointer;
     transition: all 0.2s var(--ease);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
   }
 
   .filter-chip:hover {
@@ -103,6 +144,59 @@ const types = Array.from(
     background: var(--c-sky);
     color: #fff;
     border-color: var(--c-sky);
+  }
+
+  .chip-count {
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: rgba(22, 64, 122, 0.1);
+    color: inherit;
+    border-radius: var(--radius-pill);
+    padding: 0.05rem 0.45rem;
+    min-width: 1.4em;
+    text-align: center;
+  }
+  .filter-chip.active .chip-count {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .sort-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .sort-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--c-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .sort-select {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--c-navy);
+    background: var(--c-surface-2);
+    border: 1px solid var(--c-line);
+    padding: 0.5rem 2rem 0.5rem 1rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: border-color 0.2s var(--ease);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2316407a' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+  }
+  .sort-select:focus {
+    outline: none;
+    border-color: var(--c-sky);
+  }
+
+  .result-count {
+    font-size: 0.9rem;
+    color: var(--c-muted);
+    margin-bottom: 1.5rem;
   }
 
   .cards-grid {
@@ -137,26 +231,94 @@ const types = Array.from(
     .cards-grid {
       grid-template-columns: 1fr;
     }
+    .controls {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 </style>
 
 <script>
-  const chips = document.querySelectorAll<HTMLButtonElement>('.filter-chip');
-  const cards = document.querySelectorAll<HTMLElement>('.card-wrap');
-  const empty = document.getElementById('emptyMsg');
+  function initListings() {
+    const grid = document.getElementById('cardsGrid');
+    if (!grid || grid.dataset.bound) return;
+    grid.dataset.bound = 'true';
 
-  chips.forEach((chip) => {
-    chip.addEventListener('click', () => {
-      chips.forEach((c) => c.classList.remove('active'));
-      chip.classList.add('active');
-      const filter = chip.dataset.filter;
+    const chips = document.querySelectorAll<HTMLButtonElement>('.filter-chip');
+    const cards = Array.from(
+      document.querySelectorAll<HTMLElement>('.card-wrap')
+    );
+    const empty = document.getElementById('emptyMsg');
+    const sortSelect = document.getElementById('sortSelect') as HTMLSelectElement | null;
+    const resultCount = document.getElementById('resultCount');
+
+    let activeFilter = 'all';
+
+    function priceOf(card: HTMLElement): number | null {
+      const raw = card.dataset.price;
+      if (raw === undefined || raw === '') return null;
+      const n = Number(raw);
+      return Number.isFinite(n) ? n : null;
+    }
+
+    function applySort() {
+      const mode = sortSelect?.value ?? 'featured';
+      const sorted = [...cards].sort((a, b) => {
+        if (mode === 'featured') {
+          // featured first, then by curated order
+          const fa = a.dataset.featured === '1' ? 0 : 1;
+          const fb = b.dataset.featured === '1' ? 0 : 1;
+          if (fa !== fb) return fa - fb;
+          return Number(a.dataset.order) - Number(b.dataset.order);
+        }
+        const pa = priceOf(a);
+        const pb = priceOf(b);
+        // Listings without a price sort to the end either way
+        if (pa === null && pb === null)
+          return Number(a.dataset.order) - Number(b.dataset.order);
+        if (pa === null) return 1;
+        if (pb === null) return -1;
+        return mode === 'price-asc' ? pa - pb : pb - pa;
+      });
+      sorted.forEach((card) => grid!.appendChild(card));
+    }
+
+    function applyFilter() {
       let visible = 0;
       cards.forEach((card) => {
-        const show = filter === 'all' || card.dataset.type === filter;
+        const show =
+          activeFilter === 'all' || card.dataset.type === activeFilter;
         card.classList.toggle('hidden', !show);
         if (show) visible++;
       });
       if (empty) empty.hidden = visible !== 0;
+      if (resultCount) {
+        resultCount.textContent =
+          visible === 0
+            ? ''
+            : `Showing ${visible} ${visible === 1 ? 'property' : 'properties'}` +
+              (activeFilter === 'all' ? '' : ` in ${activeFilter}`);
+      }
+    }
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        chips.forEach((c) => c.classList.remove('active'));
+        chip.classList.add('active');
+        activeFilter = chip.dataset.filter ?? 'all';
+        applyFilter();
+      });
     });
-  });
+
+    sortSelect?.addEventListener('change', () => {
+      applySort();
+      applyFilter();
+    });
+
+    applySort();
+    applyFilter();
+  }
+
+  initListings();
+  document.addEventListener('astro:after-swap', initListings);
 </script>

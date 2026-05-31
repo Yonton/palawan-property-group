@@ -113,6 +113,12 @@ import { contact, company, whatsappLink } from '../data/site';
             <textarea id="message" name="message" rows="5" required></textarea>
           </div>
 
+          <!-- Honeypot: hidden from humans, catches naive bots -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="company-website">Company website</label>
+            <input type="text" id="company-website" name="company-website" tabindex="-1" autocomplete="off" />
+          </div>
+
           <button type="submit" class="btn btn-primary form-submit">
             Send message
           </button>
@@ -279,6 +285,16 @@ import { contact, company, whatsappLink } from '../data/site';
     text-decoration: underline;
   }
 
+  /* Honeypot — visually and structurally hidden, but not display:none
+     (some bots skip display:none fields) */
+  .hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
   @media (max-width: 880px) {
     .contact-grid {
       grid-template-columns: 1fr;
@@ -293,21 +309,29 @@ import { contact, company, whatsappLink } from '../data/site';
   // Static-site friendly: opens the visitor's mail client with a prefilled
   // message. To capture submissions automatically, connect a form service
   // (Formspree, Netlify Forms, Web3Forms) — see the README.
-  const form = document.getElementById('contactForm');
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
-    const subject = `Property inquiry from ${data.get('name')}`;
-    const body = [
-      `Name: ${data.get('name')}`,
-      `Email: ${data.get('email')}`,
-      `Phone: ${data.get('phone') || '—'}`,
-      `Interested in: ${data.get('interest')}`,
-      '',
-      `${data.get('message')}`,
-    ].join('\n');
-    window.location.href = `mailto:${email}?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
-  });
+  function initContactForm() {
+    const form = document.getElementById('contactForm');
+    if (!form || form.dataset.bound) return;
+    form.dataset.bound = 'true';
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      // Honeypot: if filled, silently drop (likely a bot)
+      if (data.get('company-website')) return;
+      const subject = `Property inquiry from ${data.get('name')}`;
+      const body = [
+        `Name: ${data.get('name')}`,
+        `Email: ${data.get('email')}`,
+        `Phone: ${data.get('phone') || '—'}`,
+        `Interested in: ${data.get('interest')}`,
+        '',
+        `${data.get('message')}`,
+      ].join('\n');
+      window.location.href = `mailto:${email}?subject=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(body)}`;
+    });
+  }
+  initContactForm();
+  document.addEventListener('astro:after-swap', initContactForm);
 </script>

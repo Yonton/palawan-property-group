@@ -95,18 +95,24 @@ const thumb = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
 </style>
 
 <script>
-  document.querySelectorAll('.yt').forEach((el) => {
-    const btn = el.querySelector('.yt-btn');
-    btn?.addEventListener('click', () => {
-      const id = (el as HTMLElement).dataset.id;
-      const iframe = document.createElement('iframe');
-      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-      iframe.allowFullscreen = true;
-      iframe.title = 'Property video';
-      // Keep the container, just swap its children
-      el.innerHTML = '';
-      el.appendChild(iframe);
+  function initYouTube() {
+    document.querySelectorAll('.yt').forEach((el) => {
+      if ((el as HTMLElement).dataset.bound) return;
+      (el as HTMLElement).dataset.bound = 'true';
+      const btn = el.querySelector('.yt-btn');
+      btn?.addEventListener('click', () => {
+        const id = (el as HTMLElement).dataset.id;
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        iframe.title = 'Property video';
+        // Keep the container, just swap its children
+        el.innerHTML = '';
+        el.appendChild(iframe);
+      });
     });
-  });
+  }
+  initYouTube();
+  document.addEventListener('astro:after-swap', initYouTube);
 </script>

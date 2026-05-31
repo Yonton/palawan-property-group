@@ -12,7 +12,7 @@ const waHref = whatsappLink(
 );
 ---
 
-<header class="site-header" id="siteHeader">
+<header class="site-header" id="siteHeader" transition:persist="site-header">
   <div class="header-inner glass">
     <a href="/" class="brand" aria-label="Palawan Property Group — home">
       <Logo width={168} animated={true} />
@@ -247,46 +247,67 @@ const waHref = whatsappLink(
 </style>
 
 <script>
-  const header = document.getElementById('siteHeader');
-  const toggle = document.getElementById('navToggle');
-  const menu = document.getElementById('mobileMenu');
+  function initHeader() {
+    const header = document.getElementById('siteHeader');
+    const toggle = document.getElementById('navToggle');
+    const menu = document.getElementById('mobileMenu');
 
-  // Solidify header on scroll
-  const onScroll = () => {
-    if (window.scrollY > 24) header?.classList.add('scrolled');
-    else header?.classList.remove('scrolled');
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+    // Solidify header on scroll (guard against double-binding on persist)
+    if (header && !header.dataset.scrollBound) {
+      header.dataset.scrollBound = 'true';
+      const onScroll = () => {
+        if (window.scrollY > 24) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
 
-  function closeMenu() {
-    menu?.classList.remove('is-open');
-    toggle?.setAttribute('aria-expanded', 'false');
-    toggle?.setAttribute('aria-label', 'Open menu');
+    function closeMenu() {
+      menu?.classList.remove('is-open');
+      toggle?.setAttribute('aria-expanded', 'false');
+      toggle?.setAttribute('aria-label', 'Open menu');
+    }
+
+    // Mobile menu toggle
+    if (toggle && !toggle.dataset.bound) {
+      toggle.dataset.bound = 'true';
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const open = menu?.classList.contains('is-open');
+        if (open) {
+          closeMenu();
+        } else {
+          menu?.classList.add('is-open');
+          toggle.setAttribute('aria-expanded', 'true');
+          toggle.setAttribute('aria-label', 'Close menu');
+        }
+      });
+
+      // Close when clicking outside
+      document.addEventListener('click', (e) => {
+        if (menu?.classList.contains('is-open') && !menu.contains(e.target as Node)) {
+          closeMenu();
+        }
+      });
+
+      // Close when a nav link is tapped
+      menu?.querySelectorAll('a').forEach((a) =>
+        a.addEventListener('click', closeMenu)
+      );
+    }
+
+    // Sync active link with the current path (header persists across navigations)
+    const path = window.location.pathname;
+    const isActive = (href: string) =>
+      href === '/' ? path === '/' : path.startsWith(href);
+    document.querySelectorAll<HTMLAnchorElement>('.nav-link, .mobile-link').forEach((link) => {
+      const href = link.getAttribute('href') ?? '';
+      link.classList.toggle('active', isActive(href));
+    });
+    closeMenu();
   }
 
-  // Mobile menu toggle
-  toggle?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const open = menu?.classList.contains('is-open');
-    if (open) {
-      closeMenu();
-    } else {
-      menu?.classList.add('is-open');
-      toggle.setAttribute('aria-expanded', 'true');
-      toggle.setAttribute('aria-label', 'Close menu');
-    }
-  });
-
-  // Close when clicking outside
-  document.addEventListener('click', (e) => {
-    if (menu?.classList.contains('is-open') && !menu.contains(e.target as Node)) {
-      closeMenu();
-    }
-  });
-
-  // Close when a nav link is tapped
-  menu?.querySelectorAll('a').forEach((a) =>
-    a.addEventListener('click', closeMenu)
-  );
+  initHeader();
+  document.addEventListener('astro:after-swap', initHeader);
 </script>

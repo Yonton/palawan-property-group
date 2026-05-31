@@ -11,6 +11,7 @@ interface Props {
   loading?: 'lazy' | 'eager';
   fetchpriority?: 'high' | 'low' | 'auto';
   sizes?: string;
+  transitionName?: string;
 }
 
 const {
@@ -22,20 +23,38 @@ const {
   loading = 'lazy',
   fetchpriority = 'auto',
   sizes,
+  transitionName,
 } = Astro.props;
 ---
 
-<img
-  src={src}
-  alt={alt}
-  width={width}
-  height={height}
-  class={className}
-  loading={loading}
-  fetchpriority={fetchpriority}
-  sizes={sizes}
-  decoding="async"
-/>
+{
+  transitionName ? (
+    <img
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      class={className}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      sizes={sizes}
+      decoding="async"
+      transition:name={transitionName}
+    />
+  ) : (
+    <img
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      class={className}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      sizes={sizes}
+      decoding="async"
+    />
+  )
+}
 
 <style>
   img {

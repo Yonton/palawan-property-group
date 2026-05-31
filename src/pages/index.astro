@@ -61,6 +61,7 @@ const waHref = whatsappLink(
               loading="eager"
               fetchpriority="high"
               sizes="(max-width:980px) 100vw, 45vw"
+              transitionName={`hero-${featured.data.slug}`}
             />
           </div>
             <div class="featured-info">
@@ -80,7 +81,7 @@ const waHref = whatsappLink(
     </div>
 
     <div class="hero-stats container">
-      <div class="stat"><strong>20+</strong><span>Properties</span></div>
+      <div class="stat"><strong data-count="20" data-suffix="+">20+</strong><span>Properties</span></div>
       <div class="stat"><strong>Local</strong><span>El Nido experts</span></div>
       <div class="stat"><strong>Licensed</strong><span>PRC accredited</span></div>
       <div class="stat"><strong>End-to-end</strong><span>Buying support</span></div>
@@ -194,6 +195,57 @@ const waHref = whatsappLink(
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  function initCounters() {
+    const els = document.querySelectorAll<HTMLElement>('strong[data-count]');
+    if (!els.length) return;
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    els.forEach((el) => {
+      if (el.dataset.counted) return;
+      const target = Number(el.dataset.count);
+      const suffix = el.dataset.suffix ?? '';
+      if (!Number.isFinite(target)) return;
+
+      if (reduce) {
+        el.textContent = `${target}${suffix}`;
+        el.dataset.counted = 'true';
+        return;
+      }
+
+      const run = () => {
+        el.dataset.counted = 'true';
+        const duration = 1100;
+        const start = performance.now();
+        const tick = (now: number) => {
+          const p = Math.min((now - start) / duration, 1);
+          // easeOutCubic
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = `${Math.round(target * eased)}${suffix}`;
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              run();
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+      io.observe(el);
+    });
+  }
+  initCounters();
+  document.addEventListener('astro:after-swap', initCounters);
+</script>
 
 <style>
   /* ---------- HERO ---------- */
