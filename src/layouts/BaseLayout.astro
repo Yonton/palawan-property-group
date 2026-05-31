@@ -105,13 +105,6 @@ const ogImage = new URL(image, site.url).href;
       document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
     </script>
       <script>
-      // Handle Netlify Identity tokens — redirect to admin for recovery/invite
-      if (window.location.hash) {
-        const hash = window.location.hash;
-        if (hash.includes('recovery_token') || hash.includes('invite_token')) {
-          window.location.href = '/admin/' + hash;
-        }
-      }
       // Redirect to admin after login
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on('init', (user) => {

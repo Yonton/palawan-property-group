@@ -6,6 +6,19 @@
     <meta name="robots" content="noindex" />
     <title>Palawan Property Group — Admin</title>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      // Handle invite and recovery tokens on the admin page
+      window.addEventListener('load', function() {
+        const hash = window.location.hash;
+        if (hash && (hash.includes('invite_token') || hash.includes('recovery_token'))) {
+          if (window.netlifyIdentity) {
+            window.netlifyIdentity.on('init', function() {
+              window.netlifyIdentity.open();
+            });
+          }
+        }
+      });
+    </script>
   </head>
   <body>
     <!-- Decap CMS -->
