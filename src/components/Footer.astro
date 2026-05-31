@@ -56,7 +56,15 @@ const year = new Date().getFullYear();
 
   <div class="container footer-bottom">
     <p>© {year} {site.name}. All rights reserved.</p>
-    <p class="footer-credit">Your slice of paradise awaits.</p>
+    <p class="footer-credit">
+      Website by
+      <a
+        href="https://base7studio.com"
+        target="_blank"
+        rel="noopener"
+        class="footer-credit-link"
+      >Base7 Studio</a>
+    </p>
   </div>
 </footer>
 
@@ -163,8 +171,16 @@ const year = new Date().getFullYear();
   }
 
   .footer-credit {
-    font-family: var(--font-display);
-    font-style: italic;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+  }
+  .footer-credit-link {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+    transition: color 0.2s var(--ease);
+  }
+  .footer-credit-link:hover {
+    color: var(--c-sun-light);
   }
 
   @media (max-width: 880px) {
