@@ -1,0 +1,203 @@
+backend:
+  name: github
+  repo: Yonton/palawan-property-group
+  branch: main
+
+# Uploads go into public/images/listings
+media_folder: "public/images/listings"
+public_folder: "/images/listings"
+
+# Use Netlify Identity for login
+local_backend: false
+
+collections:
+  - name: "listings"
+    label: "Property Listings"
+    label_singular: "Property Listing"
+    folder: "src/content/listings"
+    create: true
+    delete: true
+    extension: "json"
+    format: "json"
+    identifier_field: "slug"
+    summary: "{{title}} — {{location}}"
+    sortable_fields: ["order", "title", "location", "propertyType"]
+    fields:
+
+      - label: "Title"
+        name: "title"
+        widget: "string"
+        hint: "e.g. Beachfront Resort — Cashew Grove"
+
+      - label: "URL Slug"
+        name: "slug"
+        widget: "string"
+        hint: "URL-friendly name, lowercase with hyphens. e.g. beachfront-resort-cashew-grove. Must be unique."
+        pattern: ['^[a-z0-9-]+$', "Lowercase letters, numbers and hyphens only"]
+
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options: ["available", "reserved", "sold"]
+        default: "available"
+
+      - label: "Featured on homepage"
+        name: "featured"
+        widget: "boolean"
+        default: false
+        hint: "Only one listing should be featured at a time"
+
+      - label: "Sort order"
+        name: "order"
+        widget: "number"
+        default: 99
+        hint: "Lower numbers appear first. 1 = first listing"
+
+      - label: "Price (numbers only, leave blank to show Inquire for price)"
+        name: "price"
+        widget: "number"
+        required: false
+        hint: "e.g. 15000000 — do not include commas or peso sign"
+
+      - label: "Price label (if no price set)"
+        name: "priceLabel"
+        widget: "string"
+        required: false
+        default: "Inquire for price"
+
+      - label: "Currency"
+        name: "currency"
+        widget: "string"
+        default: "PHP"
+
+      - label: "Property type"
+        name: "propertyType"
+        widget: "select"
+        options:
+          - "Beachfront"
+          - "Residential Lot"
+          - "Commercial Land"
+          - "Vacation Home"
+          - "Resort"
+          - "Investment"
+
+      - label: "Location"
+        name: "location"
+        widget: "string"
+        hint: "e.g. Busuanga, Coron, Palawan"
+
+      - label: "Lot size (sqm)"
+        name: "lotSizeSqm"
+        widget: "number"
+        required: false
+
+      - label: "Lot size label"
+        name: "lotSizeLabel"
+        widget: "string"
+        required: false
+        hint: "e.g. 1.6 hectares"
+
+      - label: "Beachfront meters"
+        name: "beachfrontMeters"
+        widget: "number"
+        required: false
+
+      - label: "Bedrooms"
+        name: "bedrooms"
+        widget: "number"
+        required: false
+
+      - label: "Bathrooms"
+        name: "bathrooms"
+        widget: "number"
+        required: false
+
+      - label: "Floor area (sqm)"
+        name: "floorAreaSqm"
+        widget: "number"
+        required: false
+
+      - label: "Short description (shown on listing cards)"
+        name: "shortDescription"
+        widget: "text"
+        hint: "1-2 sentences. Shown on the property card and in Google search results."
+
+      - label: "Full description (paragraphs)"
+        name: "description"
+        widget: "list"
+        label_singular: "Paragraph"
+        field:
+          label: "Paragraph"
+          name: "paragraph"
+          widget: "text"
+        hint: "Add one paragraph at a time"
+
+      - label: "Investment highlights"
+        name: "highlights"
+        widget: "list"
+        label_singular: "Highlight"
+        field:
+          label: "Highlight"
+          name: "highlight"
+          widget: "string"
+        hint: "e.g. 180 meters of private beachfront"
+        required: false
+
+      - label: "Utilities & infrastructure"
+        name: "utilities"
+        widget: "list"
+        label_singular: "Utility"
+        field:
+          label: "Item"
+          name: "item"
+          widget: "string"
+        required: false
+
+      - label: "Access & location notes"
+        name: "accessNotes"
+        widget: "list"
+        label_singular: "Note"
+        field:
+          label: "Note"
+          name: "note"
+          widget: "string"
+        required: false
+
+      - label: "Hero image (main photo)"
+        name: "heroImage"
+        widget: "image"
+        hint: "Main photo shown on the listing card and at the top of the listing page. Use WebP format, 1600px wide."
+
+      - label: "Gallery photos"
+        name: "gallery"
+        widget: "list"
+        label_singular: "Photo"
+        field:
+          label: "Photo"
+          name: "photo"
+          widget: "image"
+        required: false
+        hint: "All additional photos shown in the gallery. Use WebP format."
+
+      - label: "YouTube video IDs"
+        name: "youtube"
+        widget: "list"
+        label_singular: "Video"
+        field:
+          label: "YouTube video ID or URL"
+          name: "video"
+          widget: "string"
+          hint: "e.g. 10Uvf7uNbrk or https://youtu.be/10Uvf7uNbrk"
+        required: false
+
+      - label: "SEO title"
+        name: "metaTitle"
+        widget: "string"
+        required: false
+        hint: "Shown in browser tab and Google. Leave blank to use the listing title."
+
+      - label: "SEO description"
+        name: "metaDescription"
+        widget: "text"
+        required: false
+        hint: "Shown in Google search results. 150-160 characters ideal."
