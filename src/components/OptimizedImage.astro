@@ -1,7 +1,13 @@
 ---
-// OptimizedImage.astro — wrapper that adds all performance attributes.
-// CSS in the parent controls actual display size — width/height here are
-// just hints for the browser to reserve layout space (prevents CLS).
+// OptimizedImage.astro
+// Emits a responsive <img> with a srcset served through Netlify's Image CDN
+// (/.netlify/images). Netlify resizes + converts to AVIF/WebP on the fly, so
+// the browser only downloads the size it actually needs — fixing over-delivery
+// and LCP without moving files out of /public (keeps the CMS workflow intact).
+//
+// Falls back to the original `src` when:
+//   - running `astro dev` (no Netlify CDN) via the plain src attribute
+//   - the image is remote / not under our domain
 interface Props {
   src: string;
   alt: string;
@@ -12,6 +18,7 @@ interface Props {
   fetchpriority?: 'high' | 'low' | 'auto';
   sizes?: string;
   transitionName?: string;
+  quality?: number;
 }
 
 const {
@@ -22,35 +29,67 @@ const {
   class: className = '',
   loading = 'lazy',
   fetchpriority = 'auto',
-  sizes,
+  sizes = '100vw',
   transitionName,
+  quality = 76,
 } = Astro.props;
+
+// Only transform local images (those starting with "/"). Leave anything else
+// (data URIs, remote URLs) untouched.
+const isLocal = src.startsWith('/') && !src.startsWith('//');
+
+// Candidate widths to generate. Capped at the intrinsic width so we never
+// upscale. Tuned to common device widths + 2x for retina.
+const candidateWidths = [320, 480, 640, 768, 960, 1280, 1600, 1920];
+const maxW = width || 1600;
+const widths = candidateWidths.filter((w) => w <= maxW);
+if (widths[widths.length - 1] !== maxW) widths.push(maxW);
+
+function cdnUrl(w: number) {
+  const params = new URLSearchParams({
+    url: src,
+    w: String(w),
+    q: String(quality),
+    fm: 'avif',
+  });
+  return `/.netlify/images?${params.toString()}`;
+}
+
+const srcset =
+  isLocal && import.meta.env.PROD
+    ? widths.map((w) => `${cdnUrl(w)} ${w}w`).join(', ')
+    : undefined;
+
+// The src used as the universal fallback (dev + non-Netlify hosts).
+const fallbackSrc = src;
 ---
 
 {
   transitionName ? (
     <img
-      src={src}
+      src={fallbackSrc}
+      srcset={srcset}
+      sizes={srcset ? sizes : undefined}
       alt={alt}
       width={width}
       height={height}
       class={className}
       loading={loading}
       fetchpriority={fetchpriority}
-      sizes={sizes}
       decoding="async"
       transition:name={transitionName}
     />
   ) : (
     <img
-      src={src}
+      src={fallbackSrc}
+      srcset={srcset}
+      sizes={srcset ? sizes : undefined}
       alt={alt}
       width={width}
       height={height}
       class={className}
       loading={loading}
       fetchpriority={fetchpriority}
-      sizes={sizes}
       decoding="async"
     />
   )

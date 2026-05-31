@@ -14,6 +14,7 @@ interface Props {
   image?: string;
   noHeaderOffset?: boolean;
   preloadImage?: string; // path to eagerly preload (above-fold hero image)
+  preloadSizes?: string; // sizes hint matching how the LCP image is displayed
   structuredData?: 'organization' | 'listing';
   listing?: CollectionEntry<'listings'>;
   darkHero?: boolean; // page opens with a full-bleed dark hero behind the header
@@ -25,6 +26,7 @@ const {
   image = '/images/og-default.jpg',
   noHeaderOffset = false,
   preloadImage,
+  preloadSizes = '100vw',
   structuredData = 'organization',
   listing,
   darkHero = false,
@@ -33,6 +35,20 @@ const {
 const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.tagline}`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL(image, site.url).href;
+
+// Build a responsive preload that matches the CDN-served LCP image, so the
+// browser fetches the correctly-sized variant instead of the full original.
+function preloadSrcset(src: string) {
+  if (!src || !src.startsWith('/') || src.startsWith('//') || !import.meta.env.PROD) return null;
+  const widths = [480, 640, 768, 960, 1280, 1600];
+  return widths
+    .map((w) => {
+      const p = new URLSearchParams({ url: src, w: String(w), q: '76', fm: 'avif' });
+      return `/.netlify/images?${p.toString()} ${w}w`;
+    })
+    .join(', ');
+}
+const preloadSet = preloadImage ? preloadSrcset(preloadImage) : null;
 ---
 
 <!doctype html>
@@ -48,7 +64,17 @@ const ogImage = new URL(image, site.url).href;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
 
-    {preloadImage && (
+    {preloadImage && preloadSet && (
+      <link
+        rel="preload"
+        as="image"
+        href={preloadImage}
+        imagesrcset={preloadSet}
+        imagesizes={preloadSizes}
+        fetchpriority="high"
+      />
+    )}
+    {preloadImage && !preloadSet && (
       <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />
     )}
 

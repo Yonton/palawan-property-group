@@ -5,6 +5,14 @@ interface Props {
 }
 const { images, title } = Astro.props;
 if (!images || images.length === 0) return;
+
+// Small, optimized thumbnails via Netlify Image CDN. The lightbox still loads
+// the full-resolution original (passed to the script below) for zoomed viewing.
+function thumb(src: string, w = 640) {
+  if (!src.startsWith('/') || src.startsWith('//') || !import.meta.env.PROD) return src;
+  const params = new URLSearchParams({ url: src, w: String(w), q: '74', fm: 'avif' });
+  return `/.netlify/images?${params.toString()}`;
+}
 ---
 
 <div class="gallery-section">
@@ -17,7 +25,9 @@ if (!images || images.length === 0) return;
         aria-label={`View photo ${i + 1} of ${images.length}`}
       >
         <img
-          src={src}
+          src={thumb(src, 640)}
+          srcset={`${thumb(src, 480)} 480w, ${thumb(src, 640)} 640w, ${thumb(src, 960)} 960w`}
+          sizes="(max-width:600px) 50vw, 33vw"
           alt={`${title} — photo ${i + 1}`}
           loading="lazy"
           decoding="async"
@@ -63,7 +73,7 @@ if (!images || images.length === 0) return;
   <div class="lb-thumbs" id="lbThumbs">
     {images.map((src, i) => (
       <button class="lb-thumb" data-index={i} aria-label={`Go to photo ${i + 1}`}>
-        <img src={src} alt="" loading="lazy" width="80" height="54" />
+        <img src={thumb(src, 160)} alt="" loading="lazy" width="80" height="54" />
       </button>
     ))}
   </div>
