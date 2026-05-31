@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: Yonton/palawan-property-group
+  name: git-gateway
   branch: main
 
 # Uploads go into public/images/listings
