@@ -62,8 +62,6 @@ const ogImage = new URL(image, site.url).href;
     <noscript>
       <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     </noscript>
-    <!-- Netlify Identity — required for CMS login -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body>
     <a href="#main" class="sr-only">Skip to content</a>
@@ -104,17 +102,21 @@ const ogImage = new URL(image, site.url).href;
       );
       document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
     </script>
-      <script>
+      <!-- Netlify Identity — loaded deferred so it never blocks page render -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
+    <script>
       // Redirect to admin after login
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on('init', (user) => {
-          if (!user) {
-            window.netlifyIdentity.on('login', () => {
-              document.location.href = '/admin/';
-            });
-          }
-        });
-      }
+      window.addEventListener('load', function() {
+        if (window.netlifyIdentity) {
+          window.netlifyIdentity.on('init', (user) => {
+            if (!user) {
+              window.netlifyIdentity.on('login', () => {
+                document.location.href = '/admin/';
+              });
+            }
+          });
+        }
+      });
     </script>
   </body>
 </html>
