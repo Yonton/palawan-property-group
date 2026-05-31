@@ -1,0 +1,222 @@
+---
+import { formatPrice } from '../data/site';
+import OptimizedImage from './OptimizedImage.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  listing: CollectionEntry<'listings'>;
+}
+const { listing } = Astro.props;
+const d = listing.data;
+
+const specs: { label: string; value: string }[] = [];
+if (d.lotSizeLabel) specs.push({ label: 'Lot', value: d.lotSizeLabel });
+if (d.beachfrontMeters)
+  specs.push({ label: 'Beachfront', value: `${d.beachfrontMeters} m` });
+if (d.bedrooms) specs.push({ label: 'Beds', value: String(d.bedrooms) });
+if (d.bathrooms) specs.push({ label: 'Baths', value: String(d.bathrooms) });
+---
+
+<a class="card reveal" href={`/listings/${d.slug}`}>
+  <div class="card-media">
+<div class="card-img-wrap">
+      <OptimizedImage
+        src={d.heroImage}
+        alt={d.title}
+        width={600}
+        height={450}
+        loading="lazy"
+        sizes="(max-width:600px) 100vw, (max-width:980px) 50vw, 33vw"
+        transitionName={`hero-${d.slug}`}
+      />
+    </div>
+    <span class="card-type">{d.propertyType}</span>
+    {d.status !== 'available' && <span class="card-status">{d.status}</span>}
+  </div>
+  <div class="card-body">
+    <p class="card-location">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z" />
+        <circle cx="12" cy="10" r="2.5" />
+      </svg>
+      {d.location}
+    </p>
+    <h3 class="card-title">{d.title}</h3>
+    <p class="card-desc">{d.shortDescription}</p>
+
+    {
+      specs.length > 0 && (
+        <ul class="card-specs">
+          {specs.map((s) => (
+            <li>
+              <span class="spec-value">{s.value}</span>
+              <span class="spec-label">{s.label}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    <div class="card-foot">
+      <span class="card-price">{formatPrice(d.price, d.priceLabel, d.currency)}</span>
+      <span class="card-cta">
+        View details
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </span>
+    </div>
+  </div>
+</a>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--c-surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--c-line);
+    transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+    height: 100%;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .card-media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--c-surface-3);
+  }
+
+  .card-media img, .card-media .card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+  }
+
+  .card:hover .card-media img, .card-media .card-img {
+    transform: scale(1.06);
+  }
+
+  .card-type {
+    position: absolute;
+    inset-block-start: 0.9rem;
+    inset-inline-start: 0.9rem;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--c-navy);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.8rem;
+    border-radius: var(--radius-pill);
+    backdrop-filter: blur(6px);
+  }
+
+  .card-status {
+    position: absolute;
+    inset-block-start: 0.9rem;
+    inset-inline-end: 0.9rem;
+    background: var(--c-sun);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.8rem;
+    border-radius: var(--radius-pill);
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 1.4rem 1.5rem 1.5rem;
+    flex: 1;
+  }
+
+  .card-location {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--c-sky-deep);
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+    color: var(--c-ink);
+  }
+
+  .card-desc {
+    font-size: 0.93rem;
+    color: var(--c-muted);
+    line-height: 1.6;
+  }
+
+  .card-specs {
+    list-style: none;
+    display: flex;
+    gap: 1.4rem;
+    margin-block: 0.4rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--c-line);
+  }
+
+  .card-specs li {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .spec-value {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--c-navy);
+    font-size: 1.05rem;
+  }
+
+  .spec-label {
+    font-size: 0.74rem;
+    color: var(--c-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .card-foot {
+    margin-top: auto;
+    padding-top: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .card-price {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--c-navy);
+    font-size: 1.1rem;
+  }
+
+  .card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--c-sky-deep);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: gap 0.25s var(--ease);
+  }
+
+  .card:hover .card-cta {
+    gap: 0.6rem;
+  }
+</style>
