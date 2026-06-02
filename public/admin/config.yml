@@ -169,14 +169,13 @@ collections:
 
       - label: "Gallery photos"
         name: "gallery"
-        widget: "list"
-        label_singular: "Photo"
-        field:
-          label: "Photo"
-          name: "photo"
-          widget: "image"
+        widget: "image"
+        allow_multiple: true
+        media_library:
+          config:
+            multiple: true
         required: false
-        hint: "All additional photos shown in the gallery. Use WebP format."
+        hint: "Select several photos at once. Drag to reorder. Use WebP, ~1600px wide."
 
       - label: "YouTube video IDs"
         name: "youtube"
