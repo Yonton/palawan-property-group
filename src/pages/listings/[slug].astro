@@ -127,10 +127,6 @@ keyFacts.push({ label: 'Type', value: d.propertyType });
         <h2 class="block-title">{d.shortDescription}</h2>
         {d.description.map((para) => <p class="detail-para">{para}</p>)}
 
-        {d.gallery.length > 0 && (
-          <PhotoGallery images={d.gallery} title={d.title} />
-        )}
-
         {
           d.highlights.length > 0 && (
             <div class="block">
@@ -148,6 +144,10 @@ keyFacts.push({ label: 'Type', value: d.propertyType });
             </div>
           )
         }
+
+        {d.gallery.length > 0 && (
+          <PhotoGallery images={d.gallery} title={d.title} />
+        )}
 
         {
           d.utilities.length > 0 && (
