@@ -2,7 +2,8 @@ backend:
   name: git-gateway
   branch: main
 
-# Uploads go into public/images/listings
+# Global fallback for the media library. The listings collection below
+# overrides this so each listing's uploads nest into their own subfolder.
 media_folder: "public/images/listings"
 public_folder: "/images/listings"
 
@@ -21,6 +22,12 @@ collections:
     identifier_field: "slug"
     summary: "{{title}} — {{location}}"
     sortable_fields: ["order", "title", "location", "propertyType"]
+    # Each listing's photo uploads nest into their own slug subfolder,
+    # e.g. public/images/listings/beachfront-resort-cashew-grove/
+    # IMPORTANT: fill in the URL Slug field BEFORE uploading photos,
+    # otherwise the subfolder name will be empty.
+    media_folder: "/public/images/listings/{{slug}}"
+    public_folder: "/images/listings/{{slug}}"
     fields:
 
       - label: "Title"
