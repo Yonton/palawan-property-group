@@ -270,11 +270,13 @@ keyFacts.push({ label: 'Type', value: d.propertyType });
     align-items: flex-end;
     overflow: hidden;
   }
-  .detail-hero-img {
+  .detail-hero-img,
+  .detail-hero img.detail-hero-img {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
     object-fit: cover;
     object-position: center;
   }
