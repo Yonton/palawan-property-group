@@ -4,24 +4,18 @@
   "status": "available",
   "featured": false,
   "order": 2,
-
   "priceLabel": "Inquire for price",
   "currency": "PHP",
-
   "propertyType": "Residential Lot",
   "location": "Tiniguiban, El Nido, Palawan",
-
   "lotSizeSqm": 30000,
   "lotSizeLabel": "3 hectares",
-
   "shortDescription": "A commanding 3-hectare property in Tiniguiban with sweeping panoramic views — just 30 to 45 minutes from El Nido Town Proper and ideal for eco-resort or vacation home development.",
-
   "description": [
     "Perched in the elevated countryside of Tiniguiban, El Nido, this exceptional 3-hectare property offers some of the most spectacular panoramic views in all of Palawan — sweeping vistas of surrounding mountains, lush valleys, and the natural beauty that makes El Nido one of the most sought-after destinations in the Philippines.",
     "Conveniently located just 30 to 45 minutes from both El Nido Town Proper and El Nido Airport, the property strikes the perfect balance between accessibility and seclusion. Buyers and developers will find a blank canvas of extraordinary scale — large enough to accommodate a full eco-resort, a private estate, or a multi-villa vacation retreat, yet intimate enough for a single luxury home with world-class views.",
     "El Nido's booming tourism industry makes this an outstanding long-term investment. With visitor numbers growing year on year and a severe shortage of quality accommodation and vacation properties in elevated locations, a well-developed property here stands to deliver exceptional returns. Whether you envision an eco-resort, boutique hotel, private vacation homes, or a personal retreat, this is the kind of land opportunity that rarely comes to market in El Nido."
   ],
-
   "highlights": [
     "3 hectares of prime elevated land",
     "Spectacular panoramic mountain and countryside views",
@@ -32,21 +26,24 @@
     "Strong long-term investment in El Nido's growth corridor",
     "Rare large-format land in a premium location"
   ],
-
   "utilities": [],
-
   "accessNotes": [
     "From El Nido Town Proper: approximately 30–45 minutes by van or car.",
     "From El Nido Airport: approximately 30–45 minutes by van or car."
   ],
-
   "heroImage": "/images/listings/prime-overlooking-property-tiniguiban-el-nido/hero.webp",
-  "gallery": [],
+  "gallery": [
+    "/images/listings/prime-overlooking-property-tiniguiban-el-nido/Tin2.webp",
+    "/images/listings/prime-overlooking-property-tiniguiban-el-nido/Tin3.webp",
+    "/images/listings/prime-overlooking-property-tiniguiban-el-nido/Tin4.webp",
+    "/images/listings/prime-overlooking-property-tiniguiban-el-nido/Tin5.webp",
+    "/images/listings/prime-overlooking-property-tiniguiban-el-nido/Tin6.webp",
+    "/images/listings/prime-overlooking-property-tiniguiban-el-nido/Tin7.webp"
+  ],
   "youtube": [
     "AArInZBCGM4",
     "PbFjtYYDweY"
   ],
-
   "metaTitle": "3-Hectare Overlooking Property for Sale — Tiniguiban, El Nido, Palawan",
   "metaDescription": "Prime 3-hectare elevated property in Tiniguiban, El Nido with panoramic mountain views. 30–45 mins from El Nido town and airport. Ideal for eco-resort, vacation homes or investment."
 }
