@@ -153,6 +153,23 @@ const preloadSet = preloadImage ? preloadSrcset(preloadImage) : null;
       document.addEventListener('astro:after-swap', initReveal);
     </script>
 
+    <!-- Forward Netlify Identity tokens (invite / recovery / email confirm)
+         that land on the site root over to /admin/ so the CMS can process
+         them. Without this, those links open the homepage and the token is
+         lost — which is why the URL previously had to be edited by hand to
+         add /admin/ before the #. This runs before the widget so the hash is
+         preserved through the redirect. -->
+    <script is:inline>
+      (function () {
+        var hash = window.location.hash || '';
+        var isTokenLink = /(invite_token|recovery_token|confirmation_token|email_change_token)=/.test(hash);
+        var onAdmin = window.location.pathname.indexOf('/admin') === 0;
+        if (isTokenLink && !onAdmin) {
+          window.location.replace('/admin/' + hash);
+        }
+      })();
+    </script>
+
     <!-- Netlify Identity — loaded deferred so it never blocks page render -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
     <script>
