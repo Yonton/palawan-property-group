@@ -1,28 +1,45 @@
 {
-  "title": "Beachfront Resort — Cashew Grove",
-  "slug": "hotel-sa-coron-cashew-grove",
-  "status": "available",
+  "shortDescription": "A titled 1.6-hectare beachfront estate with 180 meters of private shoreline and an operating resort — a rare turnkey investment in Coron, Palawan.",
+  "heroImage": "/images/listings/hotel-sa-coron/grove6.webp",
+  "lotSizeLabel": "1.6 hectares",
+  "youtube": [
+    "10Uvf7uNbrk",
+    "nvBoSq-0Tqg"
+  ],
+  "utilities": [
+    "Dual power: solar energy system and commercial electric supply",
+    "Existing power line connection available nearby",
+    "Accessible via the main road leading to Busuanga",
+    "Solid foundation for future expansion and development"
+  ],
+  "slug": "hotel-sa-coron",
+  "priceLabel": "",
   "featured": true,
   "order": 1,
-
-  "priceLabel": "Inquire for price",
-  "currency": "PHP",
-
   "propertyType": "Beachfront",
-  "location": "Busuanga, Coron, Palawan",
-
-  "lotSizeSqm": 16000,
-  "lotSizeLabel": "1.6 hectares",
   "beachfrontMeters": 180,
-
-  "shortDescription": "A titled 1.6-hectare beachfront estate with 180 meters of private shoreline and an operating resort — a rare turnkey investment in Coron, Palawan.",
-
+  "currency": "PHP 200,000,000.00",
+  "gallery": [
+    "/images/listings/hotel-sa-coron-cashew-grove/grove6.webp",
+    "/images/listings/hotel-sa-coron-cashew-grove/grove7.webp",
+    "/images/listings/hotel-sa-coron-cashew-grove/grove8.webp",
+    "/images/listings/hotel-sa-coron-cashew-grove/grove9.webp"
+  ],
+  "status": "available",
+  "metaTitle": "Beachfront Resort for Sale — Cashew Grove, Coron, Palawan",
+  "location": "Busuanga, Coron, Palawan",
+  "metaDescription": "A titled 1.6-hectare beachfront resort with 180m of private shoreline in Busuanga, Coron, Palawan. 12 cottages, pool, beachfront bar. A rare turnkey investment opportunity.",
+  "title": "Beachfront Existing Resort-Coron ",
   "description": [
     "Set along a peaceful and secluded stretch of Busuanga in Coron, Palawan, this stunning 1.6-hectare titled beachfront property offers approximately 180 meters of private shoreline framed by crystal-clear waters and untouched nature.",
     "The estate is already home to a fully operating resort, complete with twelve duplex cottage rooms, traditional nipa huts, a swimming pool, a beachfront bar, and restaurant facilities. With both solar and commercial power options, easy road access, and utilities available nearby, the groundwork is in place for an immediate income-generating operation.",
     "For the visionary investor, the potential is extraordinary. The property is ideally suited for expansion into a luxury resort, wellness retreat, boutique hotel, or exclusive beachfront development — a rare opportunity in one of the Philippines' most sought-after tourism destinations. This is a unique chance to own privacy, natural beauty, and unlimited room to grow in the heart of Palawan's tourism paradise."
   ],
-
+  "lotSizeSqm": 16000,
+  "accessNotes": [
+    "From Coron town proper: approximately 50–60 minutes by van or car (around 50–55 km depending on route and road conditions).",
+    "From Francisco B. Reyes Airport (Busuanga Airport): approximately 25–30 minutes by van or car (around 21.5 km away)."
+  ],
   "highlights": [
     "1.6 hectares of titled property",
     "180 meters of private beachfront",
@@ -33,36 +50,5 @@
     "Direct road access",
     "Peaceful, private location",
     "Strong potential for luxury resort expansion"
-  ],
-
-  "utilities": [
-    "Dual power: solar energy system and commercial electric supply",
-    "Existing power line connection available nearby",
-    "Accessible via the main road leading to Busuanga",
-    "Solid foundation for future expansion and development"
-  ],
-
-  "accessNotes": [
-    "From Coron town proper: approximately 50–60 minutes by van or car (around 50–55 km depending on route and road conditions).",
-    "From Francisco B. Reyes Airport (Busuanga Airport): approximately 25–30 minutes by van or car (around 21.5 km away)."
-  ],
-
-  "heroImage": "/images/listings/hotel-sa-coron-cashew-grove/Hero.webp",
-  "gallery": [
-    "/images/listings/hotel-sa-coron-cashew-grove/grove2.webp",
-    "/images/listings/hotel-sa-coron-cashew-grove/grove3.webp",
-    "/images/listings/hotel-sa-coron-cashew-grove/grove4.webp",
-    "/images/listings/hotel-sa-coron-cashew-grove/grove5.webp",
-    "/images/listings/hotel-sa-coron-cashew-grove/grove6.webp",
-    "/images/listings/hotel-sa-coron-cashew-grove/grove7.webp",
-    "/images/listings/hotel-sa-coron-cashew-grove/grove8.webp",
-    "/images/listings/hotel-sa-coron-cashew-grove/grove9.webp"
-  ],
-  "youtube": [
-    "10Uvf7uNbrk",
-    "nvBoSq-0Tqg"
-  ],
-
-  "metaTitle": "Beachfront Resort for Sale — Cashew Grove, Coron, Palawan",
-  "metaDescription": "A titled 1.6-hectare beachfront resort with 180m of private shoreline in Busuanga, Coron, Palawan. 12 cottages, pool, beachfront bar. A rare turnkey investment opportunity."
+  ]
 }
