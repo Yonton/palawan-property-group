@@ -94,14 +94,20 @@ if (d.bathrooms) specs.push({ label: 'Baths', value: String(d.bathrooms) });
     background: var(--c-surface-3);
   }
 
-  .card-media img, .card-media .card-img {
+  .card-img-wrap {
+    width: 100%;
+    height: 100%;
+  }
+
+  .card-media :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
     transition: transform 0.6s var(--ease);
   }
 
-  .card:hover .card-media img, .card-media .card-img {
+  .card:hover .card-media :global(img) {
     transform: scale(1.06);
   }
 
