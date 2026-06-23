@@ -206,3 +206,104 @@ collections:
         widget: "text"
         required: false
         hint: "Shown in Google search results. 150-160 characters ideal."
+
+  - name: "blog"
+    label: "Blog Posts"
+    label_singular: "Blog Post"
+    folder: "src/content/blog"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    identifier_field: "title"
+    summary: "{{title}}  ·  {{category}}"
+    sortable_fields: ["pubDate", "title", "category"]
+    # Blog images upload here. Use WebP, ~1600px wide.
+    media_folder: "/public/images/blog"
+    public_folder: "/images/blog"
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+        hint: "The article headline. Also becomes the page URL. e.g. 'El Nido Property for Sale: A Buyer's Guide'"
+
+      - label: "Short description / excerpt"
+        name: "description"
+        widget: "text"
+        hint: "1-2 sentences shown on the blog card and used as the Google search snippet if no SEO description is set."
+
+      - label: "Publish date"
+        name: "pubDate"
+        widget: "datetime"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        format: "YYYY-MM-DD"
+
+      - label: "Last updated (optional)"
+        name: "updatedDate"
+        widget: "datetime"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        format: "YYYY-MM-DD"
+        required: false
+
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - "El Nido"
+          - "Coron"
+          - "Investment"
+          - "Buying Guide"
+          - "Palawan"
+
+      - label: "Hero image"
+        name: "heroImage"
+        widget: "image"
+        hint: "Main photo shown at the top of the post and on the blog card. Use WebP, ~1600px wide."
+
+      - label: "Author"
+        name: "author"
+        widget: "string"
+        default: "Palawan Property Group"
+
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        label_singular: "Tag"
+        field:
+          label: "Tag"
+          name: "tag"
+          widget: "string"
+        required: false
+        hint: "Keywords for this post, e.g. el nido, buying land"
+
+      - label: "Feature this post"
+        name: "featured"
+        widget: "boolean"
+        default: false
+        required: false
+
+      - label: "Draft (hide from the site)"
+        name: "draft"
+        widget: "boolean"
+        default: false
+        required: false
+        hint: "Turn ON to keep this post hidden while you work on it."
+
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+        hint: "The article. Use headings (##), bold, lists and links."
+
+      - label: "SEO title (optional)"
+        name: "metaTitle"
+        widget: "string"
+        required: false
+        hint: "Shown in the browser tab and Google. Leave blank to use the title. Aim for under 60 characters."
+
+      - label: "SEO description (optional)"
+        name: "metaDescription"
+        widget: "text"
+        required: false
+        hint: "Shown in Google search results. 150-160 characters ideal."

@@ -19,8 +19,9 @@ interface Props {
   noHeaderOffset?: boolean;
   preloadImage?: string; // path to eagerly preload (above-fold hero image)
   preloadSizes?: string; // sizes hint matching how the LCP image is displayed
-  structuredData?: 'organization' | 'listing';
+  structuredData?: 'organization' | 'listing' | 'article';
   listing?: CollectionEntry<'listings'>;
+  post?: CollectionEntry<'blog'>;
   darkHero?: boolean; // page opens with a full-bleed dark hero behind the header
 }
 
@@ -33,6 +34,7 @@ const {
   preloadSizes = '100vw',
   structuredData = 'organization',
   listing,
+  post,
   darkHero = false,
 } = Astro.props;
 
@@ -83,7 +85,7 @@ const preloadSet = preloadImage ? preloadSrcset(preloadImage) : null;
     )}
 
     <!-- Open Graph -->
-    <meta property="og:type" content={structuredData === 'listing' ? 'article' : 'website'} />
+    <meta property="og:type" content={structuredData === 'listing' || structuredData === 'article' ? 'article' : 'website'} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -97,7 +99,7 @@ const preloadSet = preloadImage ? preloadSrcset(preloadImage) : null;
     <meta name="twitter:image" content={ogImage} />
 
     <!-- Structured data (JSON-LD) for rich search results -->
-    <StructuredData type={structuredData} listing={listing} />
+    <StructuredData type={structuredData} listing={listing} post={post} url={canonical} />
 
     <!-- Fonts are self-hosted via Fontsource (imported in the frontmatter
          above and bundled by Astro) — no third-party requests. -->

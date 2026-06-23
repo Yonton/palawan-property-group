@@ -40,6 +40,7 @@ export const contact = {
 export const nav = [
   { label: 'Home', href: '/' },
   { label: 'Properties', href: '/listings' },
+  { label: 'Blog', href: '/blog' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ];

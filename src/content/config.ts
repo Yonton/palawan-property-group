@@ -53,4 +53,31 @@ const listings = defineCollection({
   }),
 });
 
-export const collections = { listings };
+const blog = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    // 1-2 sentence summary — used on cards and as the meta description fallback
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
+    heroImage: z.string(),
+    category: z.enum([
+      'El Nido',
+      'Coron',
+      'Investment',
+      'Buying Guide',
+      'Palawan',
+    ]),
+    author: z.string().default('Palawan Property Group'),
+    tags: z.array(z.string()).default([]),
+    featured: z.boolean().default(false),
+    draft: z.boolean().default(false),
+
+    // SEO overrides (optional — fall back to title/description)
+    metaTitle: z.string().optional(),
+    metaDescription: z.string().optional(),
+  }),
+});
+
+export const collections = { listings, blog };

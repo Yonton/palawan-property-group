@@ -1,0 +1,190 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const categories = Array.from(
+  new Set(posts.map((p) => p.data.category))
+).sort();
+
+const catCounts = new Map<string, number>();
+for (const p of posts) {
+  catCounts.set(p.data.category, (catCounts.get(p.data.category) ?? 0) + 1);
+}
+---
+
+<BaseLayout
+  title="Palawan Property Blog"
+  description="Guides and insights on buying property and investing in real estate in El Nido, Coron and across Palawan — market trends, ownership rules, and local know-how."
+>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow">Insights &amp; guides</p>
+      <h1 class="page-title">The Palawan Property Blog</h1>
+      <p class="lead">
+        Practical guides to buying land, beachfront and investment property in
+        El Nido, Coron and across Palawan — written by people who live and work here.
+      </p>
+    </div>
+  </section>
+
+  <section class="section blog-body">
+    <div class="container">
+      <div class="filter-bar" role="group" aria-label="Filter by category">
+        <button class="filter-chip active" data-filter="all">
+          All <span class="chip-count">{posts.length}</span>
+        </button>
+        {
+          categories.map((c) => (
+            <button class="filter-chip" data-filter={c}>
+              {c} <span class="chip-count">{catCounts.get(c)}</span>
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="cards-grid" id="postsGrid">
+        {
+          posts.map((post) => (
+            <div class="card-wrap" data-cat={post.data.category}>
+              <BlogCard post={post} />
+            </div>
+          ))
+        }
+      </div>
+
+      <p class="empty-msg" id="emptyMsg" hidden>
+        No articles in this category yet — check back soon.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding-top: clamp(8rem, 14vw, 10rem);
+    padding-bottom: clamp(2rem, 4vw, 3rem);
+    background: linear-gradient(180deg, var(--c-surface-3), var(--c-surface));
+  }
+
+  .page-title {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    margin-block: 0.5rem 1rem;
+  }
+
+  .blog-body {
+    padding-top: 1rem;
+  }
+
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .filter-chip {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--c-navy);
+    background: var(--c-surface-2);
+    border: 1px solid var(--c-line);
+    padding: 0.55rem 1.2rem;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all 0.2s var(--ease);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .filter-chip:hover {
+    border-color: var(--c-sky);
+    color: var(--c-sky-deep);
+  }
+
+  .filter-chip.active {
+    background: var(--c-sky);
+    color: #fff;
+    border-color: var(--c-sky);
+  }
+
+  .chip-count {
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: rgba(22, 64, 122, 0.1);
+    color: inherit;
+    border-radius: var(--radius-pill);
+    padding: 0.05rem 0.45rem;
+    min-width: 1.4em;
+    text-align: center;
+  }
+  .filter-chip.active .chip-count {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+  }
+
+  .card-wrap.hidden {
+    display: none;
+  }
+
+  .empty-msg {
+    text-align: center;
+    color: var(--c-muted);
+    padding: 3rem 1rem;
+  }
+
+  @media (max-width: 980px) {
+    .cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  function initBlog() {
+    const grid = document.getElementById('postsGrid');
+    if (!grid || grid.dataset.bound) return;
+    grid.dataset.bound = 'true';
+
+    const chips = document.querySelectorAll<HTMLButtonElement>('.filter-chip');
+    const cards = Array.from(
+      document.querySelectorAll<HTMLElement>('.card-wrap')
+    );
+    const empty = document.getElementById('emptyMsg');
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        chips.forEach((c) => c.classList.remove('active'));
+        chip.classList.add('active');
+        const filter = chip.dataset.filter ?? 'all';
+        let visible = 0;
+        cards.forEach((card) => {
+          const show = filter === 'all' || card.dataset.cat === filter;
+          card.classList.toggle('hidden', !show);
+          if (show) visible++;
+        });
+        if (empty) empty.hidden = visible !== 0;
+      });
+    });
+  }
+
+  initBlog();
+  document.addEventListener('astro:after-swap', initBlog);
+</script>

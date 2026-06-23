@@ -7,11 +7,13 @@ import { site, company, contact } from '../data/site';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
-  type?: 'organization' | 'listing';
+  type?: 'organization' | 'listing' | 'article';
   listing?: CollectionEntry<'listings'>;
+  post?: CollectionEntry<'blog'>;
+  url?: string;
 }
 
-const { type = 'organization', listing } = Astro.props;
+const { type = 'organization', listing, post, url: pageUrl } = Astro.props;
 
 const orgSchema = {
   '@context': 'https://schema.org',
@@ -95,6 +97,50 @@ function buildListingSchema(l: CollectionEntry<'listings'>) {
   };
 }
 
+function buildArticleSchema(p: CollectionEntry<'blog'>, url: string) {
+  const d = p.data;
+  const image = new URL(d.heroImage, site.url).href;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${url}/#article`,
+    headline: d.metaTitle ?? d.title,
+    description: d.metaDescription ?? d.description,
+    image,
+    url,
+    datePublished: d.pubDate.toISOString().split('T')[0],
+    dateModified: (d.updatedDate ?? d.pubDate).toISOString().split('T')[0],
+    author: { '@type': 'Organization', name: d.author, url: site.url },
+    publisher: { '@id': `${site.url}/#organization` },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    keywords: d.tags.join(', '),
+    articleSection: d.category,
+  };
+}
+
+const articleBreadcrumb =
+  type === 'article' && post && pageUrl
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: site.url },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Blog',
+            item: `${site.url}/blog`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: post.data.title,
+            item: pageUrl,
+          },
+        ],
+      }
+    : null;
+
 const breadcrumb =
   type === 'listing' && listing
     ? {
@@ -121,7 +167,9 @@ const breadcrumb =
 const schemas =
   type === 'listing' && listing
     ? [buildListingSchema(listing), breadcrumb]
-    : [orgSchema];
+    : type === 'article' && post && pageUrl
+      ? [buildArticleSchema(post, pageUrl), articleBreadcrumb]
+      : [orgSchema];
 ---
 
 {
