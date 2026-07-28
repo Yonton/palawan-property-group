@@ -1,0 +1,25 @@
+{
+  "shortDescription": "This premium beachfront property presents an exceptional opportunity for investors seeking a luxury hospitality asset in the world-renowned destination of El Nido. With its prime location, expansive land area, and strong tourism potential, the resort offers excellent opportunities for further development and long-term value appreciation.",
+  "heroImage": "/images/listings/resort/ora-webp.webp",
+  "price": 15000000000,
+  "slug": "resort",
+  "priceLabel": "Inquire for price",
+  "featured": false,
+  "order": 7,
+  "propertyType": "Resort",
+  "beachfrontMeters": 6500,
+  "currency": "PHP15000000000",
+  "status": "available",
+  "location": "EL Nido Palawan philippines",
+  "title": "HOTEL-BEACHFRONT",
+  "description": [
+    "A rare investment opportunity in one of the Philippines' premier tourist destinations. Ora Beach Resort is a beachfront resort located in the peaceful Corong Corong area of El Nido, Palawan, offering stunning sunset views and convenient access to the town center and nearby island-hopping attractions. The resort features modern accommodations, swimming pools, a restaurant, fitness facilities, and direct beach access, making it an attractive destination for both local and international travelers"
+  ],
+  "lotSizeSqm": 6500,
+  "highlights": [
+    "Prime Beachfront Location in El Nido, one of the Philippines' most sought-after island destinations.",
+    "Direct access to a white-sand beach with panoramic views of turquoise waters and dramatic limestone islands.",
+    "Existing resort operation with established hospitality infrastructure.",
+    "Convenient access to El Nido Airport and the town center, providing excellent connectivity for guests."
+  ]
+}
