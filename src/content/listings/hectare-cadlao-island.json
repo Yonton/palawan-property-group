@@ -1,44 +1,58 @@
 {
-  "shortDescription": "Prime 4.5-Hectare Beachfront Property – El Nido, Palawan A rare investment opportunity in the world-renowned destination of El Nido, Palawan.",
-  "heroImage": "/images/listings/hectare-cadlao-island/462568252_564971269617931_4386962817074218787_n.jpg",
-  "slug": "hectare-cadlao-island",
-  "priceLabel": "Inquire for price",
-  "featured": false,
-  "order": 99,
-  "propertyType": "Beachfront",
-  "currency": "PHP",
-  "gallery": [
-    "/images/listings/hectare-cadlao-island/462564424_582916640788831_7745928594800396020_n-1-.jpg",
-    "/images/listings/hectare-cadlao-island/462561782_580874797641833_2073867521518618160_n.jpg",
-    "/images/listings/hectare-cadlao-island/462568655_583966174039053_642889111547004495_n.jpg",
-    "/images/listings/hectare-cadlao-island/462563546_1494590351224734_732061834798868693_n-1-.jpg",
-    "/images/listings/hectare-cadlao-island/462561200_603426612181269_576957143076919668_n.jpg",
-    "/images/listings/hectare-cadlao-island/462562225_1146118863599968_8524554568597812417_n.jpg",
-    "/images/listings/hectare-cadlao-island/462570965_1296862001228111_5179005742736236608_n-1-.jpg",
-    "/images/listings/hectare-cadlao-island/462568252_564971269617931_4386962817074218787_n.jpg",
-    "/images/listings/hectare-cadlao-island/462564424_582916640788831_7745928594800396020_n.jpg",
-    "/images/listings/hectare-cadlao-island/462581723_1648948092643778_4415206565943080889_n.jpg"
-  ],
-  "status": "available",
-  "location": "part of Tour D  Island, Palawan",
-  "metaDescription": "",
   "title": "4.5 Hectare Cadlao Island",
-  "description": [
-    "Prime 4.5-Hectare Beachfront Property – El Nido, Palawan\n\nA rare investment opportunity in the world-renowned destination of El Nido, Palawan. This 4.5-hectare titled beachfront property features approximately 171.99 meters of pristine beachfront frontage, crystal-clear waters, and a naturally sheltered cove.\n\nLocated just 20 minutes from El Nido town proper by boat and 5 minutes by speedboat, the property offers the perfect combination of accessibility, privacy, and exclusivity.\nIdeal for a luxury resort, boutique hotel, private villas, or eco-tourism development, this exceptional property presents outstanding investment potential in one of the Philippines' premier island destinations.\n"
-  ],
-  "lotSizeSqm": 4500,
-  "accessNotes": [
-    "Excellent accessibility while maintaining privacy and exclusivity"
-  ],
-  "highlights": [
-    "Titled beachfront property with secure ownership",
-    "Approximately 171.99 meters of prime beachfront frontage",
-    "Stunning white-sand shoreline and crystal-clear turquoise waters",
-    "Located within the world-renowned island paradise of El Nido, Palawan",
-    "Ideal for luxury resorts, boutique hotels, private villas, eco-tourism projects, and high-end residential developments",
-    "Surrounded by breathtaking natural beauty and spectacular island views",
-    "Excellent accessibility while maintaining privacy and exclusivity",
-    "Exceptional investment opportunity in one of the Philippines' premier tourism destinations",
-    "Strong potential for tourism, hospitality, and long-term property value appreciation"
-  ]
+  "slug": "hectare-cadlao-island",
+  "media": {
+    "heroImage": "/images/listings/hectare-cadlao-island/462568252_564971269617931_4386962817074218787_n.jpg",
+    "gallery": [
+      "/images/listings/hectare-cadlao-island/462564424_582916640788831_7745928594800396020_n-1-.jpg",
+      "/images/listings/hectare-cadlao-island/462561782_580874797641833_2073867521518618160_n.jpg",
+      "/images/listings/hectare-cadlao-island/462568655_583966174039053_642889111547004495_n.jpg",
+      "/images/listings/hectare-cadlao-island/462563546_1494590351224734_732061834798868693_n-1-.jpg",
+      "/images/listings/hectare-cadlao-island/462561200_603426612181269_576957143076919668_n.jpg",
+      "/images/listings/hectare-cadlao-island/462562225_1146118863599968_8524554568597812417_n.jpg",
+      "/images/listings/hectare-cadlao-island/462570965_1296862001228111_5179005742736236608_n-1-.jpg",
+      "/images/listings/hectare-cadlao-island/462568252_564971269617931_4386962817074218787_n.jpg",
+      "/images/listings/hectare-cadlao-island/462564424_582916640788831_7745928594800396020_n.jpg",
+      "/images/listings/hectare-cadlao-island/462581723_1648948092643778_4415206565943080889_n.jpg"
+    ],
+    "youtube": []
+  },
+  "copy": {
+    "shortDescription": "Prime 4.5-Hectare Beachfront Property – El Nido, Palawan A rare investment opportunity in the world-renowned destination of El Nido, Palawan.",
+    "description": [
+      "Prime 4.5-Hectare Beachfront Property – El Nido, Palawan\n\nA rare investment opportunity in the world-renowned destination of El Nido, Palawan. This 4.5-hectare titled beachfront property features approximately 171.99 meters of pristine beachfront frontage, crystal-clear waters, and a naturally sheltered cove.\n\nLocated just 20 minutes from El Nido town proper by boat and 5 minutes by speedboat, the property offers the perfect combination of accessibility, privacy, and exclusivity.\nIdeal for a luxury resort, boutique hotel, private villas, or eco-tourism development, this exceptional property presents outstanding investment potential in one of the Philippines' premier island destinations.\n"
+    ],
+    "highlights": [
+      "Titled beachfront property with secure ownership",
+      "Approximately 171.99 meters of prime beachfront frontage",
+      "Stunning white-sand shoreline and crystal-clear turquoise waters",
+      "Located within the world-renowned island paradise of El Nido, Palawan",
+      "Ideal for luxury resorts, boutique hotels, private villas, eco-tourism projects, and high-end residential developments",
+      "Surrounded by breathtaking natural beauty and spectacular island views",
+      "Excellent accessibility while maintaining privacy and exclusivity",
+      "Exceptional investment opportunity in one of the Philippines' premier tourism destinations",
+      "Strong potential for tourism, hospitality, and long-term property value appreciation"
+    ]
+  },
+  "where": {
+    "location": "part of Tour D  Island, Palawan",
+    "propertyType": "Beachfront",
+    "accessNotes": [
+      "Excellent accessibility while maintaining privacy and exclusivity"
+    ]
+  },
+  "specs": {
+    "lotSizeSqm": 4500,
+    "utilities": []
+  },
+  "pricing": {
+    "currency": "PHP",
+    "priceLabel": "Inquire for price"
+  },
+  "seo": {},
+  "admin": {
+    "status": "available",
+    "featured": false,
+    "order": 99
+  }
 }

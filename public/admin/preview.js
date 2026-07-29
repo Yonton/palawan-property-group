@@ -72,6 +72,65 @@
     return path;
   }
 
+  /**
+   * The CMS stores listings grouped (media / copy / where / …) so the editor
+   * can show collapsible sections. Flatten to the shape the site renders —
+   * this mirrors the .transform() in src/content/config.ts, so if you add a
+   * field to one, add it to the other.
+   */
+  function flatten(raw) {
+    var media = raw.media || {};
+    var copy = raw.copy || {};
+    var where = raw.where || {};
+    var specs = raw.specs || {};
+    var pricing = raw.pricing || {};
+    var seo = raw.seo || {};
+    var admin = raw.admin || {};
+    return {
+      title: raw.title,
+      slug: raw.slug,
+
+      heroImage: media.heroImage,
+      gallery: media.gallery,
+      youtube: media.youtube,
+
+      shortDescription: copy.shortDescription,
+      description: copy.description,
+      highlights: copy.highlights,
+
+      location: where.location,
+      propertyType: where.propertyType,
+      accessNotes: where.accessNotes,
+
+      lotSizeSqm: specs.lotSizeSqm,
+      lotSizeLabel: specs.lotSizeLabel,
+      beachfrontMeters: specs.beachfrontMeters,
+      bedrooms: specs.bedrooms,
+      bathrooms: specs.bathrooms,
+      floorAreaSqm: specs.floorAreaSqm,
+      utilities: specs.utilities,
+
+      price: pricing.price,
+      priceLabel: pricing.priceLabel,
+      currency: pricing.currency,
+
+      metaTitle: seo.metaTitle,
+      metaDescription: seo.metaDescription,
+
+      status: admin.status,
+      featured: admin.featured,
+      order: admin.order,
+    };
+  }
+
+  // Mirrors lotSizeText() in src/data/listings.ts — the label wins, otherwise
+  // the sqm figure is formatted.
+  function lotSizeText(d) {
+    if (d.lotSizeLabel) return d.lotSizeLabel;
+    if (d.lotSizeSqm) return Number(d.lotSizeSqm).toLocaleString('en-PH') + ' sqm';
+    return null;
+  }
+
   function toList(value) {
     if (!value) return [];
     if (Array.isArray(value)) return value.filter(function (v) { return !isBlank(v); });
@@ -99,7 +158,8 @@
 
   function cardHtml(d, heroUrl) {
     var specs = [];
-    if (d.lotSizeLabel) specs.push({ label: 'Lot', value: d.lotSizeLabel });
+    var lot = lotSizeText(d);
+    if (lot) specs.push({ label: 'Lot', value: lot });
     if (d.beachfrontMeters) specs.push({ label: 'Beachfront', value: d.beachfrontMeters + ' m' });
     if (d.bedrooms) specs.push({ label: 'Beds', value: String(d.bedrooms) });
     if (d.bathrooms) specs.push({ label: 'Baths', value: String(d.bathrooms) });
@@ -149,7 +209,8 @@
 
   function pageHtml(d, heroUrl, galleryUrls) {
     var facts = [];
-    if (d.lotSizeLabel) facts.push({ label: 'Lot size', value: d.lotSizeLabel });
+    var lotSize = lotSizeText(d);
+    if (lotSize) facts.push({ label: 'Lot size', value: lotSize });
     if (d.beachfrontMeters) facts.push({ label: 'Beachfront', value: d.beachfrontMeters + ' meters' });
     if (d.bedrooms) facts.push({ label: 'Bedrooms', value: String(d.bedrooms) });
     if (d.bathrooms) facts.push({ label: 'Bathrooms', value: String(d.bathrooms) });
@@ -280,7 +341,7 @@
 
   function ListingPreview(props) {
     var data = props.entry.get('data');
-    var d = data && data.toJS ? data.toJS() : {};
+    var d = flatten(data && data.toJS ? data.toJS() : {});
     var getAsset = props.getAsset;
 
     var heroUrl = assetUrl(getAsset, d.heroImage);

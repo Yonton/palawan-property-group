@@ -1,5 +1,21 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
+type ListingData = CollectionEntry<'listings'>['data'];
+
+/**
+ * How the lot size should read on the site.
+ *
+ * The CMS has two lot-size fields: a number in sqm and an optional label for
+ * when hectares read better. Previously only the label was ever displayed, so
+ * a listing with just the sqm figure filled in showed no lot size at all —
+ * data entered, silently never shown. Fall back to formatting the number.
+ */
+export function lotSizeText(d: ListingData): string | null {
+  if (d.lotSizeLabel) return d.lotSizeLabel;
+  if (d.lotSizeSqm) return `${d.lotSizeSqm.toLocaleString('en-PH')} sqm`;
+  return null;
+}
+
 /**
  * Single source of truth for reading property listings.
  *

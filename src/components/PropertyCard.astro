@@ -1,5 +1,6 @@
 ---
 import { formatPrice } from '../data/site';
+import { lotSizeText } from '../data/listings';
 import OptimizedImage from './OptimizedImage.astro';
 import type { CollectionEntry } from 'astro:content';
 
@@ -10,7 +11,8 @@ const { listing } = Astro.props;
 const d = listing.data;
 
 const specs: { label: string; value: string }[] = [];
-if (d.lotSizeLabel) specs.push({ label: 'Lot', value: d.lotSizeLabel });
+const lot = lotSizeText(d);
+if (lot) specs.push({ label: 'Lot', value: lot });
 if (d.beachfrontMeters)
   specs.push({ label: 'Beachfront', value: `${d.beachfrontMeters} m` });
 if (d.bedrooms) specs.push({ label: 'Beds', value: String(d.bedrooms) });

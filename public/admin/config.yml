@@ -20,192 +20,266 @@ collections:
     extension: "json"
     format: "json"
     identifier_field: "slug"
-    summary: "{{title}} — {{location}}"
-    sortable_fields: ["order", "title", "location", "propertyType"]
+    # These resolve against the stored field paths — the grouped fields below
+    # live under where./admin./pricing., so they need the full path.
+    summary: "{{title}} — {{where.location}}"
+    sortable_fields: ["title", "admin.order", "where.location", "where.propertyType"]
     # Each listing's photo uploads nest into their own slug subfolder,
     # e.g. public/images/listings/beachfront-resort-cashew-grove/
     # IMPORTANT: fill in the URL Slug field BEFORE uploading photos,
     # otherwise the subfolder name will be empty.
     media_folder: "/public/images/listings/{{slug}}"
     public_folder: "/images/listings/{{slug}}"
+
+
+    # Fields are grouped into collapsible sections so the editor opens as a
+    # short list of labelled boxes instead of a 25-field wall. Each group is an
+    # object widget, which means the JSON nests under that group name — the
+    # Astro schema flattens it straight back out, so the site is unaffected.
+    #
+    # title and slug stay OUTSIDE the groups on purpose: identifier_field and
+    # the media_folder upload path resolve against top-level names only.
     fields:
 
       - label: "Title"
         name: "title"
         widget: "string"
-        hint: "e.g. Beachfront Resort — Cashew Grove"
+        hint: "The property name buyers see. e.g. Beachfront Resort — Cashew Grove"
 
       - label: "URL Slug"
         name: "slug"
         widget: "string"
-        hint: "URL-friendly name, lowercase with hyphens. e.g. beachfront-resort-cashew-grove. Must be unique."
         pattern: ['^[a-z0-9-]+$', "Lowercase letters, numbers and hyphens only"]
+        hint: "FILL THIS IN FIRST — before uploading any photos, or they save to an unnamed folder. Lowercase with hyphens, and different from every other listing. e.g. beachfront-resort-cashew-grove"
 
-      - label: "Status"
-        name: "status"
-        widget: "select"
-        options: ["available", "reserved", "sold"]
-        default: "available"
+      # ── Photos & video ────────────────────────────────────────────────
+      - label: "Photos & video"
+        name: "media"
+        widget: "object"
+        collapsed: true
+        fields:
+          - label: "Hero image (main photo)"
+            name: "heroImage"
+            widget: "image"
+            hint: "The big photo at the top of the property page, and the photo on the card. Landscape works best — about 1600px wide."
 
-      - label: "Featured on homepage"
-        name: "featured"
-        widget: "boolean"
-        default: false
-        hint: "Only one listing should be featured at a time"
+          - label: "Gallery photos"
+            name: "gallery"
+            widget: "image"
+            allow_multiple: true
+            media_library:
+              config:
+                multiple: true
+            required: false
+            hint: "Select several at once. Drag to reorder."
 
-      - label: "Sort order"
-        name: "order"
-        widget: "number"
-        default: 99
-        hint: "Lower numbers appear first. 1 = first listing"
+          - label: "YouTube videos"
+            name: "youtube"
+            widget: "list"
+            label_singular: "Video"
+            summary: "{{fields.video}}"
+            required: false
+            field:
+              label: "YouTube video ID or URL"
+              name: "video"
+              widget: "string"
+              hint: "e.g. 10Uvf7uNbrk or https://youtu.be/10Uvf7uNbrk"
 
-      - label: "Price (numbers only, leave blank to show Inquire for price)"
-        name: "price"
-        widget: "number"
-        required: false
-        hint: "e.g. 15000000 — do not include commas or peso sign"
+      # ── The write-up ──────────────────────────────────────────────────
+      - label: "The write-up"
+        name: "copy"
+        widget: "object"
+        collapsed: true
+        # No summary here on purpose: Decap can't truncate, so a long short
+        # description makes this bar several lines tall and the boxes stop
+        # lining up. The groups below only summarise short, always-set fields.
+        fields:
+          - label: "Short description"
+            name: "shortDescription"
+            widget: "text"
+            hint: "ONE or TWO sentences — no more. This is the summary on the property card, the large heading on the property page, and the line Google shows. Long paragraphs belong in the full description below."
 
-      - label: "Price label (if no price set)"
-        name: "priceLabel"
-        widget: "string"
-        required: false
-        default: "Inquire for price"
+          - label: "Full description (paragraphs)"
+            name: "description"
+            widget: "list"
+            label_singular: "Paragraph"
+            collapsed: false
+            summary: "{{fields.paragraph}}"
+            field:
+              label: "Paragraph"
+              name: "paragraph"
+              widget: "text"
+            hint: "The main write-up. Add one paragraph at a time — click 'Add paragraph' for each new one."
 
-      - label: "Currency"
-        name: "currency"
-        widget: "string"
-        default: "PHP"
+          - label: "Investment highlights"
+            name: "highlights"
+            widget: "list"
+            label_singular: "Highlight"
+            summary: "{{fields.highlight}}"
+            required: false
+            field:
+              label: "Highlight"
+              name: "highlight"
+              widget: "string"
+            hint: "Short bullet points with green ticks. e.g. 180 meters of private beachfront"
 
-      - label: "Property type"
-        name: "propertyType"
-        widget: "select"
-        options:
-          - "Beachfront"
-          - "Residential Lot"
-          - "Commercial Land"
-          - "Vacation Home"
-          - "Resort"
-          - "Investment"
+      # ── Where it is ───────────────────────────────────────────────────
+      - label: "Where it is"
+        name: "where"
+        widget: "object"
+        collapsed: true
+        summary: "{{fields.location}}  ·  {{fields.propertyType}}"
+        fields:
+          - label: "Location"
+            name: "location"
+            widget: "string"
+            hint: "Shown under the title, and used for the Google Maps link. e.g. Busuanga, Coron, Palawan"
 
-      - label: "Location"
-        name: "location"
-        widget: "string"
-        hint: "e.g. Busuanga, Coron, Palawan"
+          - label: "Property type"
+            name: "propertyType"
+            widget: "select"
+            options:
+              - "Beachfront"
+              - "Residential Lot"
+              - "Commercial Land"
+              - "Vacation Home"
+              - "Resort"
+              - "Investment"
 
-      - label: "Lot size (sqm)"
-        name: "lotSizeSqm"
-        widget: "number"
-        required: false
+          - label: "Access & location notes"
+            name: "accessNotes"
+            widget: "list"
+            label_singular: "Note"
+            summary: "{{fields.note}}"
+            required: false
+            field:
+              label: "Note"
+              name: "note"
+              widget: "string"
+            hint: "e.g. Minutes from El Nido Airport"
 
-      - label: "Lot size label"
-        name: "lotSizeLabel"
-        widget: "string"
-        required: false
-        hint: "e.g. 1.6 hectares"
+      # ── Size & features ───────────────────────────────────────────────
+      - label: "Size & features"
+        name: "specs"
+        widget: "object"
+        collapsed: true
+        fields:
+          - label: "Lot size (sqm)"
+            name: "lotSizeSqm"
+            widget: "number"
+            required: false
+            hint: "Numbers only, e.g. 6500. Shown as '6,500 sqm' unless you fill in the label below."
 
-      - label: "Beachfront meters"
-        name: "beachfrontMeters"
-        widget: "number"
-        required: false
+          - label: "Lot size — how it should read"
+            name: "lotSizeLabel"
+            widget: "string"
+            required: false
+            hint: "Optional. Use when hectares read better than sqm. e.g. 1.6 hectares"
 
-      - label: "Bedrooms"
-        name: "bedrooms"
-        widget: "number"
-        required: false
+          - label: "Beachfront (meters)"
+            name: "beachfrontMeters"
+            widget: "number"
+            required: false
+            hint: "Metres of shoreline the property actually fronts onto — not the lot size."
 
-      - label: "Bathrooms"
-        name: "bathrooms"
-        widget: "number"
-        required: false
+          - label: "Bedrooms"
+            name: "bedrooms"
+            widget: "number"
+            required: false
+            hint: "Leave blank for land with no building on it."
 
-      - label: "Floor area (sqm)"
-        name: "floorAreaSqm"
-        widget: "number"
-        required: false
+          - label: "Bathrooms"
+            name: "bathrooms"
+            widget: "number"
+            required: false
 
-      - label: "Short description (shown on listing cards)"
-        name: "shortDescription"
-        widget: "text"
-        hint: "1-2 sentences. Shown on the property card and in Google search results."
+          - label: "Floor area (sqm)"
+            name: "floorAreaSqm"
+            widget: "number"
+            required: false
+            hint: "The building's floor area, if there is one."
 
-      - label: "Full description (paragraphs)"
-        name: "description"
-        widget: "list"
-        label_singular: "Paragraph"
-        field:
-          label: "Paragraph"
-          name: "paragraph"
-          widget: "text"
-        hint: "Add one paragraph at a time"
+          - label: "Utilities & infrastructure"
+            name: "utilities"
+            widget: "list"
+            label_singular: "Utility"
+            summary: "{{fields.item}}"
+            required: false
+            field:
+              label: "Item"
+              name: "item"
+              widget: "string"
+            hint: "e.g. Reliable power distribution"
 
-      - label: "Investment highlights"
-        name: "highlights"
-        widget: "list"
-        label_singular: "Highlight"
-        field:
-          label: "Highlight"
-          name: "highlight"
-          widget: "string"
-        hint: "e.g. 180 meters of private beachfront"
-        required: false
+      # ── Price ─────────────────────────────────────────────────────────
+      - label: "Price"
+        name: "pricing"
+        widget: "object"
+        collapsed: true
+        fields:
+          - label: "Price"
+            name: "price"
+            widget: "number"
+            required: false
+            hint: "THE AMOUNT GOES HERE. Numbers only — no commas, no ₱ sign. e.g. 15000000 for ₱15,000,000. Leave blank to show 'Inquire for price' instead."
 
-      - label: "Utilities & infrastructure"
-        name: "utilities"
-        widget: "list"
-        label_singular: "Utility"
-        field:
-          label: "Item"
-          name: "item"
-          widget: "string"
-        required: false
+          - label: "Currency"
+            name: "currency"
+            widget: "select"
+            options: ["PHP", "USD"]
+            default: "PHP"
+            hint: "Just the currency — the amount goes in the Price field above."
 
-      - label: "Access & location notes"
-        name: "accessNotes"
-        widget: "list"
-        label_singular: "Note"
-        field:
-          label: "Note"
-          name: "note"
-          widget: "string"
-        required: false
+          - label: "Text to show when there is no price"
+            name: "priceLabel"
+            widget: "string"
+            required: false
+            default: "Inquire for price"
+            hint: "Only used when the Price field above is left blank."
 
-      - label: "Hero image (main photo)"
-        name: "heroImage"
-        widget: "image"
-        hint: "Main photo shown on the listing card and at the top of the listing page. Use WebP format, 1600px wide."
+      # ── Google listing ────────────────────────────────────────────────
+      - label: "Google listing"
+        name: "seo"
+        widget: "object"
+        collapsed: true
+        fields:
+          - label: "SEO title"
+            name: "metaTitle"
+            widget: "string"
+            required: false
+            hint: "Optional. Shown in the browser tab and as the Google headline. Leave blank to use the property title."
 
-      - label: "Gallery photos"
-        name: "gallery"
-        widget: "image"
-        allow_multiple: true
-        media_library:
-          config:
-            multiple: true
-        required: false
-        hint: "Select several photos at once. Drag to reorder. Use WebP, ~1600px wide."
+          - label: "SEO description"
+            name: "metaDescription"
+            widget: "text"
+            required: false
+            hint: "Optional. The grey text under the Google result — around 150 characters. Leave blank to use the short description."
 
-      - label: "YouTube video IDs"
-        name: "youtube"
-        widget: "list"
-        label_singular: "Video"
-        field:
-          label: "YouTube video ID or URL"
-          name: "video"
-          widget: "string"
-          hint: "e.g. 10Uvf7uNbrk or https://youtu.be/10Uvf7uNbrk"
-        required: false
+      # ── Admin ─────────────────────────────────────────────────────────
+      - label: "Admin"
+        name: "admin"
+        widget: "object"
+        collapsed: true
+        summary: "{{fields.status}}  ·  sort order {{fields.order}}"
+        fields:
+          - label: "Status"
+            name: "status"
+            widget: "select"
+            options: ["available", "reserved", "sold"]
+            default: "available"
+            hint: "'reserved' and 'sold' add a badge to the property card."
 
-      - label: "SEO title"
-        name: "metaTitle"
-        widget: "string"
-        required: false
-        hint: "Shown in browser tab and Google. Leave blank to use the listing title."
+          - label: "Featured on homepage"
+            name: "featured"
+            widget: "boolean"
+            default: false
+            hint: "Turn on for the one property to headline the homepage. Only one at a time."
 
-      - label: "SEO description"
-        name: "metaDescription"
-        widget: "text"
-        required: false
-        hint: "Shown in Google search results. 150-160 characters ideal."
+          - label: "Sort order"
+            name: "order"
+            widget: "number"
+            default: 99
+            hint: "Position in the properties list. 1 appears first, higher numbers appear later."
 
   - name: "blog"
     label: "Blog Posts"
@@ -271,6 +345,7 @@ collections:
         name: "tags"
         widget: "list"
         label_singular: "Tag"
+        summary: "{{fields.tag}}"
         field:
           label: "Tag"
           name: "tag"

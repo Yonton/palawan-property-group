@@ -1,6 +1,6 @@
 ---
 import { type CollectionEntry } from 'astro:content';
-import { getListings } from '../../data/listings';
+import { getListings, lotSizeText } from '../../data/listings';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import YouTubeEmbed from '../../components/YouTubeEmbed.astro';
 import { formatPrice, contact, whatsappLink } from '../../data/site';
@@ -43,7 +43,8 @@ const waHref = whatsappLink(
 );
 
 const keyFacts: { label: string; value: string }[] = [];
-if (d.lotSizeLabel) keyFacts.push({ label: 'Lot size', value: d.lotSizeLabel });
+const lot = lotSizeText(d);
+if (lot) keyFacts.push({ label: 'Lot size', value: lot });
 if (d.beachfrontMeters)
   keyFacts.push({ label: 'Beachfront', value: `${d.beachfrontMeters} meters` });
 if (d.bedrooms) keyFacts.push({ label: 'Bedrooms', value: String(d.bedrooms) });

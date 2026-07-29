@@ -1,40 +1,54 @@
 {
-  "shortDescription": "Sitio Aplaya at Lio Estate, El Nido\n\nA New Coastal Destination for Living, Business, and Investment",
-  "heroImage": "/images/listings/mixed-use/sitio-aplaya-coverted.webp",
-  "lotSizeLabel": "113000sqm",
-  "youtube": [],
-  "utilities": [
-    "Reliable power distribution",
-    "Potable water supply",
-    "Telecommunications and high-speed internet availability",
-    "Modern wastewater and sewer management systems",
-    "Solid waste collection and environmental management programs"
-  ],
-  "slug": "mixed-use",
-  "featured": false,
-  "order": 10,
-  "propertyType": "Commercial Land",
-  "currency": "PHP",
-  "gallery": [],
-  "status": "available",
-  "location": "elnido palawan",
-  "metaDescription": "🌴Sitio Aplaya at Lio Estate, El Nido – A Premier Mixed-Use Community in Palawan\n\nSitio Aplaya is an exceptional mixed-use community within Lio Estate, El Nido, Palawan, offering a rare opportunity to invest in one of the Philippines' most sought-after island destinations. Developed as part of the master-planned Lio Estate, Sitio Aplaya is designed to integrate residential, commercial, hospitality, and lifestyle spaces into a vibrant coastal neighborhood.\n",
   "title": "SITIO APLAYA-LIO ESTATE",
-  "description": [
-    "Sitio Aplaya is the newest mixed-use district within Lio Estate, Ayala Land's master-planned eco-tourism development in El Nido, Palawan. Designed as a vibrant community where nature, business, and modern island living come together, Sitio Aplaya offers a rare opportunity for investors, entrepreneurs, hospitality operators, and future residents to be part of one of the Philippines' most prestigious sustainable tourism destinations. It forms part of the continuing expansion of Lio Estate, with a strong focus on preserving the natural beauty of El Nido while supporting long-term economic growth."
-  ],
-  "lotSizeSqm": 604,
-  "accessNotes": [
-    "Minutes from El Nido Airport",
-    "Easy access to Lio Beach",
-    "Convenient connection to El Nido town proper",
-    "Close to hotels, restaurants, cafés, retail establishments, and recreational facilities",
-    "Accessible to major tourism destinations and island-hopping activities"
-  ],
-  "highlights": [
-    "Strong tourism-driven investment potential",
-    "Strong tourism-driven investment potential",
-    "Modern infrastructure and reliable utilities",
-    "Opportunities for residential, commercial, and hospitality developments"
-  ]
+  "slug": "mixed-use",
+  "media": {
+    "heroImage": "/images/listings/mixed-use/sitio-aplaya-coverted.webp",
+    "gallery": [],
+    "youtube": []
+  },
+  "copy": {
+    "shortDescription": "Sitio Aplaya at Lio Estate, El Nido\n\nA New Coastal Destination for Living, Business, and Investment",
+    "description": [
+      "Sitio Aplaya is the newest mixed-use district within Lio Estate, Ayala Land's master-planned eco-tourism development in El Nido, Palawan. Designed as a vibrant community where nature, business, and modern island living come together, Sitio Aplaya offers a rare opportunity for investors, entrepreneurs, hospitality operators, and future residents to be part of one of the Philippines' most prestigious sustainable tourism destinations. It forms part of the continuing expansion of Lio Estate, with a strong focus on preserving the natural beauty of El Nido while supporting long-term economic growth."
+    ],
+    "highlights": [
+      "Strong tourism-driven investment potential",
+      "Strong tourism-driven investment potential",
+      "Modern infrastructure and reliable utilities",
+      "Opportunities for residential, commercial, and hospitality developments"
+    ]
+  },
+  "where": {
+    "location": "elnido palawan",
+    "propertyType": "Commercial Land",
+    "accessNotes": [
+      "Minutes from El Nido Airport",
+      "Easy access to Lio Beach",
+      "Convenient connection to El Nido town proper",
+      "Close to hotels, restaurants, cafés, retail establishments, and recreational facilities",
+      "Accessible to major tourism destinations and island-hopping activities"
+    ]
+  },
+  "specs": {
+    "lotSizeSqm": 604,
+    "lotSizeLabel": "113000sqm",
+    "utilities": [
+      "Reliable power distribution",
+      "Potable water supply",
+      "Telecommunications and high-speed internet availability",
+      "Modern wastewater and sewer management systems",
+      "Solid waste collection and environmental management programs"
+    ]
+  },
+  "pricing": {
+    "currency": "PHP"
+  },
+  "seo": {
+    "metaDescription": "🌴Sitio Aplaya at Lio Estate, El Nido – A Premier Mixed-Use Community in Palawan\n\nSitio Aplaya is an exceptional mixed-use community within Lio Estate, El Nido, Palawan, offering a rare opportunity to invest in one of the Philippines' most sought-after island destinations. Developed as part of the master-planned Lio Estate, Sitio Aplaya is designed to integrate residential, commercial, hospitality, and lifestyle spaces into a vibrant coastal neighborhood.\n"
+  },
+  "admin": {
+    "status": "available",
+    "featured": false,
+    "order": 10
+  }
 }
