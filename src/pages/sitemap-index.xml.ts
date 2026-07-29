@@ -1,11 +1,11 @@
 import type { APIRoute } from 'astro';
-import { getCollection } from 'astro:content';
 import { site } from '../data/site';
+import { getListings } from '../data/listings';
 
 // Generates /sitemap-index.xml at build time (matches robots.txt).
 // Self-contained — no @astrojs/sitemap dependency required.
 export const GET: APIRoute = async () => {
-  const listings = await getCollection('listings');
+  const listings = await getListings();
   const today = new Date().toISOString().split('T')[0];
 
   const staticPages = [

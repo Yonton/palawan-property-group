@@ -1,11 +1,9 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PropertyCard from '../../components/PropertyCard.astro';
+import { getListings } from '../../data/listings';
 
-const listings = (await getCollection('listings')).sort(
-  (a, b) => a.data.order - b.data.order
-);
+const listings = await getListings();
 
 const types = Array.from(
   new Set(listings.map((l) => l.data.propertyType))

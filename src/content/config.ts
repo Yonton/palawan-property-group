@@ -1,5 +1,29 @@
 import { defineCollection, z } from 'astro:content';
 
+// Decap writes a cleared field as "" (or null for empty lists) instead of
+// dropping the key, which Zod rejects and which fails the whole build — one
+// blank box in the CMS would take the site down. Treat those as "not set".
+const blank = (v: unknown) => v === '' || v === null || v === undefined;
+
+const optionalNumber = z.preprocess((v) => {
+  if (blank(v)) return undefined;
+  // Decap occasionally hands back a numeric string
+  if (typeof v === 'string' && !Number.isNaN(Number(v))) return Number(v);
+  return v;
+}, z.number().optional());
+
+const numberWithDefault = (fallback: number) =>
+  z.preprocess((v) => {
+    if (blank(v)) return fallback;
+    if (typeof v === 'string' && !Number.isNaN(Number(v))) return Number(v);
+    return v;
+  }, z.number().default(fallback));
+
+const stringList = z.preprocess(
+  (v) => (blank(v) ? [] : v),
+  z.array(z.string()).default([])
+);
+
 const listings = defineCollection({
   type: 'data',
   schema: z.object({
@@ -7,11 +31,11 @@ const listings = defineCollection({
     title: z.string(),
     slug: z.string(),
     status: z.enum(['available', 'reserved', 'sold']).default('available'),
-    featured: z.boolean().default(false),
-    order: z.number().default(99),
+    featured: z.preprocess((v) => (blank(v) ? false : v), z.boolean().default(false)),
+    order: numberWithDefault(99),
 
     // Pricing — price is optional so we can show "Inquire for price"
-    price: z.number().optional(),
+    price: optionalNumber,
     priceLabel: z.string().optional(), // e.g. "Inquire for price"
     currency: z.string().default('PHP'),
 
@@ -27,25 +51,25 @@ const listings = defineCollection({
     location: z.string(), // e.g. "Busuanga, Coron, Palawan"
 
     // Key specs (all optional — land listings won't have beds/baths)
-    lotSizeSqm: z.number().optional(),
+    lotSizeSqm: optionalNumber,
     lotSizeLabel: z.string().optional(), // e.g. "1.6 hectares"
-    beachfrontMeters: z.number().optional(),
-    bedrooms: z.number().optional(),
-    bathrooms: z.number().optional(),
-    floorAreaSqm: z.number().optional(),
+    beachfrontMeters: optionalNumber,
+    bedrooms: optionalNumber,
+    bathrooms: optionalNumber,
+    floorAreaSqm: optionalNumber,
 
     // Content
     shortDescription: z.string(), // 1-2 sentences for cards
     description: z.array(z.string()), // paragraphs for the detail page
 
-    highlights: z.array(z.string()).default([]),
-    utilities: z.array(z.string()).default([]),
-    accessNotes: z.array(z.string()).default([]),
+    highlights: stringList,
+    utilities: stringList,
+    accessNotes: stringList,
 
     // Media
     heroImage: z.string(), // path under /images/listings/<slug>/
-    gallery: z.array(z.string()).default([]),
-    youtube: z.array(z.string()).default([]), // youtube IDs or full URLs
+    gallery: stringList,
+    youtube: stringList, // youtube IDs or full URLs
 
     // SEO
     metaTitle: z.string().optional(),
@@ -70,9 +94,9 @@ const blog = defineCollection({
       'Palawan',
     ]),
     author: z.string().default('Palawan Property Group'),
-    tags: z.array(z.string()).default([]),
-    featured: z.boolean().default(false),
-    draft: z.boolean().default(false),
+    tags: stringList,
+    featured: z.preprocess((v) => (blank(v) ? false : v), z.boolean().default(false)),
+    draft: z.preprocess((v) => (blank(v) ? false : v), z.boolean().default(false)),
 
     // SEO overrides (optional — fall back to title/description)
     metaTitle: z.string().optional(),

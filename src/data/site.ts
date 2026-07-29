@@ -58,9 +58,12 @@ export function formatPrice(
   currency = 'PHP'
 ): string {
   if (price == null) return priceLabel ?? 'Inquire for price';
+  // Intl throws on anything that isn't a 3-letter code, and the CMS currency
+  // field is free text — a typo there must not be able to break the build.
+  const code = /^[A-Za-z]{3}$/.test(currency) ? currency.toUpperCase() : 'PHP';
   return new Intl.NumberFormat('en-PH', {
     style: 'currency',
-    currency,
+    currency: code,
     maximumFractionDigits: 0,
   }).format(price);
 }

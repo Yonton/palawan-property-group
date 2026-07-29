@@ -1,5 +1,6 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { type CollectionEntry } from 'astro:content';
+import { getListings } from '../../data/listings';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import YouTubeEmbed from '../../components/YouTubeEmbed.astro';
 import { formatPrice, contact, whatsappLink } from '../../data/site';
@@ -8,7 +9,7 @@ import PhotoGallery from '../../components/PhotoGallery.astro';
 import PropertyCard from '../../components/PropertyCard.astro';
 
 export async function getStaticPaths() {
-  const listings = await getCollection('listings');
+  const listings = await getListings();
   return listings.map((listing) => ({
     params: { slug: listing.data.slug },
     props: { listing, all: listings },

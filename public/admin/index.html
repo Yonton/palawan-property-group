@@ -23,5 +23,9 @@
   <body>
     <!-- Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+    <!-- Renders the preview pane as the real site instead of a field dump.
+         Loaded after the CMS bundle so window.CMS exists. -->
+    <script src="/admin/preview.js"></script>
   </body>
 </html>

@@ -1,0 +1,552 @@
+/* ============================================================
+   Decap CMS — live preview styles for Property Listings
+   ------------------------------------------------------------
+   This renders the editor's right-hand pane as the real site
+   instead of Decap's default "label: value" dump.
+
+   The site's own card/detail CSS lives in scoped <style> blocks
+   inside PropertyCard.astro and pages/listings/[slug].astro, so
+   it can't be loaded here directly. The rules below are a
+   trimmed copy of those, built on the same brand tokens.
+
+   TOKENS ARE COPIED FROM src/styles/global.css — if you change
+   the brand palette or fonts there, update the :root block here
+   too, or the preview will drift from the live site.
+   ============================================================ */
+
+:root {
+  /* Brand */
+  --c-sky: #13b5ea;
+  --c-sky-deep: #0e93c4;
+  --c-navy: #16407a;
+  --c-navy-deep: #0c2a52;
+  --c-sun: #ff9e12;
+  --c-sun-light: #ffb81c;
+  --c-green: #33a02c;
+
+  /* Neutrals */
+  --c-ink: #15233b;
+  --c-body: #3a4a63;
+  --c-muted: #6b7a92;
+  --c-line: #e3e9f2;
+  --c-surface: #ffffff;
+  --c-surface-2: #f5f8fc;
+  --c-surface-3: #eaf2f9;
+
+  /* Typography */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Layout */
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 2px 8px rgba(16, 42, 82, 0.06);
+  --shadow: 0 12px 32px rgba(16, 42, 82, 0.1);
+}
+
+body {
+  margin: 0;
+  background: var(--c-surface-2);
+  font-family: var(--font-body);
+  color: var(--c-body);
+  line-height: 1.7;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.pv *,
+.pv *::before,
+.pv *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.pv img {
+  max-width: 100%;
+  display: block;
+}
+
+.pv h1,
+.pv h2,
+.pv h3 {
+  font-family: var(--font-display);
+  color: var(--c-ink);
+  line-height: 1.14;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Pane chrome ---------- */
+.pv-section-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  padding: 1.4rem 1.5rem 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.pv-section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--c-line);
+}
+
+.pv-warn {
+  margin: 0.9rem 1.5rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  background: #fff6e5;
+  border: 1px solid #ffd79a;
+  color: #8a5300;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* Direct child only — the <strong>s inside the bullets must stay inline,
+   or every list item breaks across three lines. */
+.pv-warn > strong {
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.pv-warn ul {
+  margin: 0.35rem 0 0 1rem;
+  padding: 0;
+}
+
+.pv-warn li {
+  margin-top: 0.15rem;
+}
+
+/* ---------- The listings-grid card ---------- */
+.pv-card-stage {
+  padding: 0.5rem 1.5rem 1.75rem;
+}
+
+.pv-card {
+  display: flex;
+  flex-direction: column;
+  max-width: 360px;
+  background: var(--c-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--c-line);
+}
+
+.pv-card-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--c-surface-3);
+}
+
+.pv-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pv-card-type {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--c-navy);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-pill);
+}
+
+.pv-card-status {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  background: var(--c-sun);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-pill);
+}
+
+.pv-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.4rem 1.5rem 1.5rem;
+  flex: 1;
+}
+
+.pv-card-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--c-sky-deep);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.pv-card-title {
+  font-size: 1.3rem;
+  color: var(--c-ink);
+}
+
+.pv-card-desc {
+  font-size: 0.93rem;
+  color: var(--c-muted);
+  line-height: 1.6;
+}
+
+.pv-card-specs {
+  list-style: none;
+  display: flex;
+  gap: 1.4rem;
+  margin: 0.4rem 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--c-line);
+}
+
+.pv-card-specs li {
+  display: flex;
+  flex-direction: column;
+}
+
+.pv-spec-value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--c-navy);
+  font-size: 1.05rem;
+}
+
+.pv-spec-label {
+  font-size: 0.74rem;
+  color: var(--c-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.pv-card-foot {
+  margin-top: auto;
+  padding-top: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.pv-card-price {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--c-navy);
+  font-size: 1.1rem;
+}
+
+.pv-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--c-sky-deep);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* ---------- The property page ---------- */
+.pv-page {
+  background: var(--c-surface);
+  border-top: 1px solid var(--c-line);
+}
+
+.pv-hero {
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--c-navy-deep);
+}
+
+.pv-hero img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pv-hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(12, 42, 82, 0.92) 0%,
+    rgba(12, 42, 82, 0.55) 28%,
+    rgba(12, 42, 82, 0.12) 55%,
+    rgba(12, 42, 82, 0.05) 100%
+  );
+}
+
+.pv-hero-inner {
+  position: relative;
+  padding: 5rem 1.75rem 1.75rem;
+  color: #fff;
+  width: 100%;
+}
+
+.pv-hero-type {
+  display: inline-block;
+  background: var(--c-sun);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: 0.9rem;
+}
+
+/* Scoped with .pv so it outranks the generic `.pv h1` colour above —
+   without this the headline renders navy-on-photo and disappears. */
+.pv .pv-hero-title {
+  color: #fff;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  max-width: 20ch;
+  margin-bottom: 0.6rem;
+}
+
+.pv-hero-loc {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  font-size: 0.98rem;
+}
+
+.pv-facts {
+  background: var(--c-navy);
+  color: #fff;
+  padding: 1.35rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.pv-facts-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+}
+
+.pv-fact {
+  display: flex;
+  flex-direction: column;
+}
+
+.pv-fact-value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: #fff;
+}
+
+.pv-fact-label {
+  font-size: 0.74rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.pv-facts-price {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pv-price-amount {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: var(--c-sun-light);
+}
+
+.pv-btn-sun {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.88rem;
+  padding: 0.7rem 1.3rem;
+  border-radius: var(--radius-pill);
+  background: var(--c-sun);
+  color: #fff;
+  white-space: nowrap;
+}
+
+.pv-body {
+  padding: 2.25rem 1.75rem 3rem;
+}
+
+.pv-eyebrow {
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-sky-deep);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.pv-eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 2px;
+  background: var(--c-sun);
+  border-radius: 2px;
+}
+
+.pv-block-title {
+  font-size: 1.45rem;
+  color: var(--c-ink);
+  margin: 0.6rem 0 1.4rem;
+  line-height: 1.3;
+}
+
+.pv-para {
+  margin-bottom: 1.2rem;
+  color: var(--c-body);
+}
+
+.pv-block {
+  margin-top: 2.4rem;
+}
+
+.pv-sub-title {
+  font-size: 1.2rem;
+  margin-bottom: 1.1rem;
+  color: var(--c-ink);
+}
+
+.pv-check-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.pv-check-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  color: var(--c-body);
+  font-size: 0.95rem;
+}
+
+.pv-check-list svg {
+  color: var(--c-green);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.pv-dot-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pv-dot-list li {
+  position: relative;
+  padding-left: 1.4rem;
+  color: var(--c-body);
+  font-size: 0.95rem;
+}
+
+.pv-dot-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62rem;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-sky);
+}
+
+.pv-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.6rem;
+}
+
+.pv-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background: var(--c-surface-3);
+}
+
+.pv-video {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-sm);
+  color: var(--c-muted);
+  font-size: 0.88rem;
+  margin-bottom: 0.6rem;
+}
+
+.pv-video svg {
+  color: #ff0033;
+  flex-shrink: 0;
+}
+
+/* Placeholder shown when no hero photo has been chosen yet */
+.pv-noimg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--c-surface-3),
+    var(--c-surface-3) 12px,
+    #e0ebf5 12px,
+    #e0ebf5 24px
+  );
+  color: var(--c-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pv-empty {
+  color: var(--c-muted);
+  font-style: italic;
+  opacity: 0.75;
+}

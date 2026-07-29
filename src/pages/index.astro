@@ -1,14 +1,12 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PropertyCard from '../components/PropertyCard.astro';
 import { formatPrice, contact, whatsappLink } from '../data/site';
+import { getListings } from '../data/listings';
 import HeroBackground from '../components/HeroBackground.astro';
 import OptimizedImage from '../components/OptimizedImage.astro';
 
-const all = (await getCollection('listings')).sort(
-  (a, b) => a.data.order - b.data.order
-);
+const all = await getListings();
 const featured = all.find((l) => l.data.featured) ?? all[0];
 const recent = all.filter((l) => l.id !== featured?.id).slice(0, 3);
 
