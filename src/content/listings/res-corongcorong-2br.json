@@ -1,0 +1,47 @@
+{
+  "pricing": {
+    "currency": "PHP",
+    "priceLabel": "Inquire for price",
+    "price": 4000000
+  },
+  "admin": {
+    "status": "available",
+    "featured": false,
+    "order": 99
+  },
+  "title": "2-Bedroom Overlooking House and Lot",
+  "slug": "res-corongcorong-2br",
+  "media": {
+    "heroImage": "/images/listings/res-corongcorong-2br/13505cac-7687-4b26-b619-8c97ae051c87.png",
+    "gallery": [
+      "/images/listings/res-corongcorong-2br/chatgpt-image-aug-1-2026-01_36_01-pm.png",
+      "/images/listings/res-corongcorong-2br/chatgpt-image-aug-1-2026-01_33_05-pm.png",
+      "/images/listings/res-corongcorong-2br/chatgpt-image-aug-1-2026-01_22_43-pm.png",
+      "/images/listings/res-corongcorong-2br/chatgpt-image-aug-1-2026-01_24_46-pm-1-.png",
+      "/images/listings/res-corongcorong-2br/13505cac-7687-4b26-b619-8c97ae051c87.png"
+    ]
+  },
+  "copy": {
+    "shortDescription": "Enjoy peaceful island living in this 2-bedroom house and lot located in Corong Corong, El Nido, Palawan. The property offers a partial view of Bacuit Bay and beautiful sunset scenery, and is conveniently situated just 230 meters from the public market and bus terminal and 15 minutes from Lio Airport. An excellent choice for a vacation home, rental property, or retirement residence. Price: ₱4,000,000.",
+    "description": [
+      "2-Bedroom Overlooking House and Lot for Sale – Corong Corong, El Nido, Palawan\n\nOwn a charming 2-bedroom house and lot in the sought-after community of Corong Corong, El Nido, Palawan. Perched in an elevated location, the property offers partial panoramic views of the world-famous Bacuit Bay and relaxing sunset views, creating the perfect tropical retreat.",
+      "Situated only 230 meters from the public market and bus terminal, the property combines convenience with privacy. It is also approximately 15 minutes from Lio Airport, providing easy access for homeowners and guests traveling to and from El Nido.",
+      "The home features two comfortable bedrooms, one bathroom, and sits on a 200-square-meter lot with a Tax Declaration. Whether you're looking for a permanent residence, a vacation getaway, or an investment property for long-term or short-term rentals, this home offers excellent value in one of Palawan's premier tourist destinations.",
+      "Its strategic location near restaurants, shops, transport terminals, and tourist attractions makes it ideal for those seeking both accessibility and the relaxed lifestyle that El Nido is known for."
+    ],
+    "highlights": [
+      "Property Type: House and Lot",
+      "Bedrooms: 2 / Bathrooms: 1",
+      "Lot Area: 200 sqm",
+      "Title: Tax Declaration",
+      "View: Partial Bacuit Bay and sunset views",
+      "Accessibility: 230 meters to the public market and bus terminal",
+      "Travel Time: Approximately 15 minutes to Lio Airport",
+      "Ideal For: Family home, vacation house, Airbnb, rental investment, retirement property, or holiday getaway"
+    ]
+  },
+  "where": {
+    "location": "Corong Corong, El Nido, Palawan",
+    "propertyType": "Vacation Home"
+  }
+}
