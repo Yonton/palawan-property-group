@@ -1,0 +1,37 @@
+{
+  "pricing": {
+    "currency": "PHP",
+    "priceLabel": "Inquire for price",
+    "price": 2040000
+  },
+  "admin": {
+    "status": "available",
+    "featured": false,
+    "order": 99
+  },
+  "title": "340 sqm Residential Lot Near Dagmay Beach, El Nido, Palawan",
+  "media": {
+    "heroImage": "/images/listings/res-dagmay-340/chatgpt-image-aug-1-2026-12_31_20-pm.png"
+  },
+  "copy": {
+    "shortDescription": "Build your dream home or vacation retreat on this 340 sqm titled residential lot, located just 200 meters from Dagmay Beach in Teneguiban, El Nido, Palawan. Enjoy stunning sunset views in front and refreshing sunrise views at the back. Only 40 minutes from El Nido Town and 30 minutes from Lio Airport, this property is ideal for a vacation home, Airbnb, or bed and breakfast. Price: ₱2,040,000 (Negotiable).",
+    "description": [
+      "340 sqm Titled Residential Lot for Sale – 200 Meters from Dagmay Beach, El Nido, Palawan\n\nOwn a beautiful 340-square-meter titled lot just 200 meters from the pristine shores of Dagmay Beach in Barangay Teneguiban, El Nido, Palawan. Perfectly positioned in a peaceful coastal community, this property offers an excellent opportunity to build a vacation home, retirement residence, Airbnb, rental villa, bed and breakfast, or boutique accommodation.\n\nOne of the property's unique features is its west-facing frontage, providing breathtaking sunset views, while the rear of the lot enjoys refreshing sunrise views, allowing you to experience the beauty of both dawn and dusk every day.\n\nConveniently located just 40 minutes from El Nido Town and approximately 30 minutes from Lio Airport, the property offers easy access while maintaining the privacy and tranquility of a relaxed island lifestyle. Reliable Smart and Globe mobile signal coverage is available, making it suitable for both living and remote work.\n\nDagmay Beach is known for its natural beauty, peaceful atmosphere, and unspoiled coastline, making it an increasingly attractive destination for homeowners and investors seeking long-term value in El Nido.\n\nThe seller is highly motivated, and the asking price of ₱2,040,000 is negotiable, making this an excellent opportunity to secure a prime residential property near one of El Nido's hidden gems."
+    ],
+    "highlights": [
+      "Price: ₱2,040,000 (Negotiable)",
+      "Lot Area: 340 sqm",
+      "Title: Titled",
+      "Location: Dagmay, Barangay Teneguiban, El Nido, Palawan",
+      "Distance to Beach: Approximately 200 meters",
+      "Travel Time: 40 minutes to El Nido Town, 30 minutes to Lio Airport",
+      "Views: Sunset-facing frontage and sunrise-facing rear",
+      "Ideal For: Vacation home, Airbnb, rental property, bed & breakfast, retirement home, or investment property"
+    ]
+  },
+  "where": {
+    "location": "Dagmay, Barangay Teneguiban, El Nido, Palawan",
+    "propertyType": "Residential Lot"
+  },
+  "slug": "res-dagmay-340"
+}
