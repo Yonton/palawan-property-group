@@ -1,0 +1,41 @@
+{
+  "pricing": {
+    "currency": "PHP",
+    "priceLabel": "Inquire for price",
+    "price": 16000000
+  },
+  "admin": {
+    "status": "available",
+    "featured": false,
+    "order": 99
+  },
+  "title": "2-Hectare Commercial Villa Property",
+  "slug": "commercial-villa-bacungan-ppc",
+  "copy": {
+    "shortDescription": "Own a 2-hectare titled commercial villa property in Nagtabon, Puerto Princesa City, just 10 minutes' walk from Nagtabon Beach and approximately 15 miles from the city proper. The property includes an operating business and comes with electricity, water, internet, and landline, making it ideal for a resort, boutique hotel, vacation rental, or commercial investment. Price: ₱16,000,000.",
+    "description": [
+      "2-Hectare Commercial Villa Property for Sale – Nagtabon, Puerto Princesa City\n\nSeize a rare opportunity to own a 2-hectare titled commercial property in the scenic coastal community of Nagtabon, Puerto Princesa City, Palawan. Located approximately 15 miles from Puerto Princesa City proper and only a 10-minute walk to the famous Nagtabon Beach, this property offers the perfect combination of accessibility, privacy, and business potential.\n\nThe property features an existing operating business, allowing buyers to continue operations immediately or redevelop the site into a larger tourism or hospitality venture. Surrounded by lush tropical landscapes and close to one of Palawan's most popular surfing and beach destinations, it is ideally suited for a boutique resort, private villa complex, eco-lodge, Airbnb business, wellness retreat, or residential estate.\n\nEssential utilities are already available, including electricity, water supply, internet connection, and landline service, reducing development costs and enabling immediate occupancy or commercial use.\n\nWith its generous land area, strategic location near the beach, existing infrastructure, and clean titled ownership, this property represents an excellent investment opportunity in one of Puerto Princesa's fastest-growing tourism destinations."
+    ],
+    "highlights": [
+      "Distance to Nagtabon Beach: Approximately 10-minute walk",
+      "Distance to Puerto Princesa City: Approximately 15 miles",
+      "Utilities Available: Electricity, water, internet, and landline",
+      "Existing Business: Currently operational",
+      "Ideal For: Resort, boutique hotel, villa development, Airbnb, wellness retreat, commercial investment, or private estate"
+    ]
+  },
+  "where": {
+    "location": "Nagtabon, Puerto Princesa City, Palawan",
+    "propertyType": "Commercial Land"
+  },
+  "media": {
+    "heroImage": "/images/listings/commercial-villa-bacungan-ppc/chatgpt-image-aug-1-2026-12_53_16-pm.png",
+    "gallery": [
+      "/images/listings/commercial-villa-bacungan-ppc/chatgpt-image-aug-1-2026-12_55_33-pm.png",
+      "/images/listings/commercial-villa-bacungan-ppc/chatgpt-image-aug-1-2026-01_01_37-pm.png",
+      "/images/listings/commercial-villa-bacungan-ppc/chatgpt-image-aug-1-2026-12_57_48-pm.png",
+      "/images/listings/commercial-villa-bacungan-ppc/chatgpt-image-aug-1-2026-12_56_43-pm.png",
+      "/images/listings/commercial-villa-bacungan-ppc/chatgpt-image-aug-1-2026-01_03_21-pm.png"
+    ]
+  }
+}
