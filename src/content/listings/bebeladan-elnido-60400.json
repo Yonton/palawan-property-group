@@ -1,0 +1,26 @@
+{
+  "pricing": {
+    "currency": "PHP",
+    "priceLabel": "Inquire for price"
+  },
+  "admin": {
+    "status": "available",
+    "featured": false,
+    "order": 99
+  },
+  "title": "60,400 sqm Prime Beachfront Property in Bebeladan, El Nido, Palawan",
+  "copy": {
+    "shortDescription": "A 60,400 sqm beachfront property in Bebeladan, El Nido, Palawan, offering stunning ocean and island views. Located just 45 minutes from El Nido Town, this prime investment is ideal for a luxury resort, private beachfront estate, or tourism development. Asking Price: ₱151,000,000.",
+    "description": [
+      "60,400 sqm Prime Beachfront Property for Sale – Bebeladan, El Nido, Palawan\n\nDiscover an exceptional investment opportunity in the picturesque coastal village of Bebeladan, El Nido, Palawan. This 60,400-square-meter beachfront property boasts a pristine shoreline, breathtaking ocean panoramas, and spectacular views of nearby islands, making it an ideal location for a luxury resort, eco-tourism project, private estate, or high-value land investment.\n\nSituated approximately 45 minutes from El Nido Town, the property offers the perfect balance of accessibility and privacy. Surrounded by unspoiled natural beauty, it provides a peaceful tropical setting while remaining within convenient reach of El Nido's world-famous attractions and amenities.\n\nWith its expansive land area, direct beach access, and panoramic coastal scenery, this property presents endless possibilities for residential, hospitality, or commercial development in one of the Philippines' most sought-after destinations."
+    ]
+  },
+  "where": {
+    "location": "Bebeladan, El Nido, Palawan",
+    "propertyType": "Beachfront"
+  },
+  "media": {
+    "heroImage": "/images/listings/chatgpt-image-aug-1-2026-12_01_41-pm.png"
+  },
+  "slug": "bebeladan-elnido-60400"
+}
