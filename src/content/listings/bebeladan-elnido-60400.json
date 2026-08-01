@@ -1,7 +1,8 @@
 {
   "pricing": {
     "currency": "PHP",
-    "priceLabel": "Inquire for price"
+    "priceLabel": "Inquire for price",
+    "price": 151000000
   },
   "admin": {
     "status": "available",
