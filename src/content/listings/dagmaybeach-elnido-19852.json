@@ -1,0 +1,37 @@
+{
+  "pricing": {
+    "currency": "PHP",
+    "priceLabel": "Inquire for price",
+    "price": 358224000
+  },
+  "admin": {
+    "status": "available",
+    "featured": false,
+    "order": 99
+  },
+  "title": "19.852-Hectare Titled Beachfront Property, Dagmay Beach, El Nido, Palawan",
+  "slug": "dagmaybeach-elnido-19852",
+  "copy": {
+    "shortDescription": "Own a 19.852-hectare titled beachfront property in the peaceful village of Dagmay Beach, Teneguiban, El Nido, Palawan. Just 45 minutes from El Nido Town, this property features a pristine sandy shoreline, breathtaking sunset views, and excellent potential for a luxury resort, private estate, or residential development. Asking Price: ₱358,224,000.",
+    "description": [
+      "19.852-Hectare Prime Beachfront Property for Sale – Dagmay Beach, El Nido, Palawan\n\nDiscover an exceptional investment opportunity at Dagmay Beach, Teneguiban, El Nido, Palawan. Spanning 19.852 hectares, this titled beachfront property offers a long stretch of natural sandy beach, crystal-clear waters, and spectacular sunset views, making it one of the most promising beachfront investments in Northern Palawan.\n\nLocated approximately 45 minutes by car from El Nido Town, the property combines accessibility with the tranquility of a secluded coastal setting. Surrounded by lush tropical landscapes, it provides the perfect environment for a luxury beach resort, boutique hotel, eco-tourism development, residential subdivision, private beachfront estate, or long-term land investment.\n\nThe area remains peaceful and relatively undeveloped, allowing investors to create a sustainable project while preserving the natural beauty that attracts visitors to El Nido. Utilities can be supported through solar power or generator systems, with a deep well recommended for a reliable water supply.\n\nWith clean titled ownership, expansive land area, and a prime beachfront location, this property is an excellent opportunity for developers and investors seeking premium real estate in one of the Philippines' most sought-after destinations."
+    ],
+    "highlights": [
+      "Price: ₱358,224,000",
+      "Lot Area: 19.852 hectares (198,520 sqm)",
+      "Property Type: Beachfront",
+      "Travel Time: Approximately 45 minutes from El Nido Town",
+      "Title: Titled",
+      "Views: Beautiful beach and breathtaking sunsets",
+      "Utilities: Suitable for solar power or generator; deep well recommended",
+      "Ideal For: Luxury resort, eco-tourism project, residential development, private estate, or long-term investment"
+    ]
+  },
+  "where": {
+    "location": "Dagmay Beach, Teneguiban, El Nido, Palawan",
+    "propertyType": "Beachfront"
+  },
+  "media": {
+    "heroImage": "/images/listings/dagmaybeach-elnido-19852/chatgpt-image-aug-1-2026-12_18_44-pm.png"
+  }
+}
