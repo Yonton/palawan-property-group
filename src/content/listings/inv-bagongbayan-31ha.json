@@ -1,0 +1,40 @@
+{
+  "pricing": {
+    "currency": "PHP",
+    "priceLabel": "Inquire for price"
+  },
+  "admin": {
+    "status": "available",
+    "featured": false,
+    "order": 99
+  },
+  "title": "31-Hectare Investment Land for Sale in Bagong Bayan, El Nido, Palawan",
+  "media": {
+    "heroImage": "/images/listings/bagingbayan_05.png",
+    "gallery": [
+      "/images/listings/bagongbayan_01.png",
+      "/images/listings/bagingbayan_02.png",
+      "/images/listings/bagongbayan_03.png",
+      "/images/listings/bagongbayan_04.png",
+      "/images/listings/bagingbayan_05.png",
+      "/images/listings/bagongbayan_06.png"
+    ]
+  },
+  "copy": {
+    "shortDescription": "Own a prime 31-hectare property in Bagong Bayan, El Nido, Palawan, priced at only ₱1,500 per square meter. Ideal for eco-tourism resorts, residential communities, farm estates, commercial developments, or long-term land banking. Surrounded by lush greenery with excellent investment potential in one of the Philippines' fastest-growing destinations.",
+    "description": [
+      "Discover an exceptional investment opportunity in Bagong Bayan, El Nido, Palawan with this expansive 31-hectare property offered at ₱1,500 per square meter.\n\nStrategically located in one of Palawan's rapidly developing areas, this property offers vast possibilities for investors and developers seeking to capitalize on El Nido's continued growth in tourism, hospitality, and residential development.\n\nThe land features a mix of open spaces and lush tropical surroundings, making it suitable for various projects.\nEco-tourism resorts,\nResidential subdivisions,\nFarm estates and agri-tourism,\nRetirement communities,\nCommercial developments,\nLong-term investment or land banking"
+    ],
+    "highlights": [
+      "Location: Bagong Bayan, El Nido, Palawan",
+      "Lot Area: 31 Hectares (310,000 sqm)",
+      "Price: ₱1,500 per sqm",
+      "Ideal for Resort, Residential, Commercial, Agriculture, Eco-Tourism, and Investment Development"
+    ]
+  },
+  "where": {
+    "location": "Bagong Bayan, El Nido, Palawan",
+    "propertyType": "Investment"
+  },
+  "slug": "inv-bagongbayan-31ha"
+}
