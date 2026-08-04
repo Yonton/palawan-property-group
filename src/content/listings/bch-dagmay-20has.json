@@ -1,0 +1,42 @@
+{
+  "pricing": {
+    "currency": "PHP",
+    "priceLabel": "Inquire for price"
+  },
+  "admin": {
+    "status": "available",
+    "featured": false,
+    "order": 99
+  },
+  "title": "20,000 SQM Beachfront Property for Sale in Dagmay Beach, El Nido, Palawan | 80-Meter Beach Frontage",
+  "slug": "bch-dagmay-20has",
+  "media": {
+    "heroImage": "/images/listings/bch-dagmay-20has/dagmay_03.png",
+    "gallery": [
+      "/images/listings/bch-dagmay-20has/dagmay_01.png",
+      "/images/listings/bch-dagmay-20has/dagmay_02.png",
+      "/images/listings/bch-dagmay-20has/dagmay_03.png",
+      "/images/listings/bch-dagmay-20has/dagmay_04.png",
+      "/images/listings/bch-dagmay-20has/dagmay_05.png"
+    ]
+  },
+  "copy": {
+    "shortDescription": "Own a 2-hectare beachfront property in the beautiful Dagmay Beach, El Nido, Palawan. Featuring 80 meters of beach frontage, this property is ideal for a boutique resort, luxury villas, eco-tourism development, or a private beachfront estate. Priced at ₱10,000 per square meter, it offers an excellent opportunity to invest in one of Palawan's emerging coastal destinations.",
+    "description": [
+      "Experience the beauty and investment potential of Dagmay Beach, El Nido, Palawan with this exceptional 20,000-square-meter beachfront property.\n\nBoasting approximately 80 meters of pristine beach frontage, the property enjoys direct access to a wide stretch of white sand and crystal-clear waters while being surrounded by lush coconut groves and scenic mountain views. Its strategic location provides convenient access to El Nido's famous attractions while offering privacy and tranquility.\n\nWhether you're planning to develop a luxury beach resort, boutique hotel, private villas, wellness retreat, or secure a premium land banking investment, this property presents outstanding long-term value in one of the Philippines' fastest-growing tourism destinations.",
+      "Approximate Travel Times\nEl Nido Town Proper – 51 mins (28.4 km);\nPublic Market – 56 mins (30 km);\nMaremegmeg Beach – 58 mins (33 km);\nLio Beach – 42 mins (23 km);\nEl Nido Airport – 42 mins (23 km);\nNacpan Beach – 36 mins (17.3 km);\nDuli Beach – 10 mins (4.3 km)"
+    ],
+    "highlights": [
+      "Prime beachfront location",
+      "Approximately 80 meters of beach frontage",
+      "20,000 sqm (2 hectares)",
+      "Peaceful and natural surroundings",
+      "Accessible from El Nido Town and Airport",
+      "Excellent for tourism, hospitality, and investment projects"
+    ]
+  },
+  "where": {
+    "location": "Dagmay Beach, El Nido, Palawan",
+    "propertyType": "Beachfront"
+  }
+}
