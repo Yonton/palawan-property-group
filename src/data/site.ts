@@ -25,7 +25,7 @@ export const company = {
 };
 
 export const contact = {
-  email: 'megaislandrealty@gmail.com',
+  email: 'palawanpropertygroup.com@gmail.com',
   // Each phone number with a label and a clean digits-only version for links
   phones: [
     { label: 'Smart', display: '+63 907-089-2784', e164: '639070892784' },
