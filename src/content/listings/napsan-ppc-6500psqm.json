@@ -1,0 +1,42 @@
+{
+  "pricing": {
+    "currency": "PHP",
+    "priceLabel": "Inquire for price"
+  },
+  "admin": {
+    "status": "available",
+    "featured": false,
+    "order": 99
+  },
+  "slug": "napsan-ppc-6500psqm",
+  "title": "Napsan Beachfront Property for Sale",
+  "media": {
+    "heroImage": "/images/listings/napsan_ppc/napsan-5-.jpg",
+    "gallery": [
+      "/images/listings/napsan_ppc/napsan-5-.jpg",
+      "/images/listings/napsan_ppc/napsan-4-.png",
+      "/images/listings/napsan_ppc/napsan-3-.png",
+      "/images/listings/napsan_ppc/napsan-2-.png",
+      "/images/listings/napsan_ppc/napsan-1-.png"
+    ]
+  },
+  "copy": {
+    "shortDescription": "Prime beachfront property in Napsan, Puerto Princesa, Palawan, with a beautiful tropical setting, beach access, and scenic views of the sea and surrounding mountains. Ideal for a private retreat, vacation home, resort, or long-term investment.",
+    "description": [
+      "Discover a beautiful coastal property in Napsan, Puerto Princesa, Palawan, surrounded by the natural beauty of the island.\n\nThe property offers a peaceful tropical setting with direct access to a beautiful beach, clear coastal waters, coconut trees, and scenic views extending toward the surrounding mountains. The existing natural landscape provides an excellent setting for a private beach residence, vacation retreat, eco-tourism concept, or potential resort development.\n\nThe area offers the relaxed atmosphere that Palawan is known for \"away from the busy city environment while still being within Puerto Princesa\"."
+    ],
+    "highlights": [
+      "Beachfront / coastal location",
+      "Natural tropical surroundings",
+      "Beautiful sea and mountain views",
+      "Potential for a private vacation property",
+      "Potential for resort, accommodation, or tourism development",
+      "Peaceful and private environment",
+      "Asking Price: ₱6,500 per square meter"
+    ]
+  },
+  "where": {
+    "location": "Napsan, Puerto Princesa City, Palawan",
+    "propertyType": "Beachfront"
+  }
+}
