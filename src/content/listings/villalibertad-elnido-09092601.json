@@ -1,0 +1,31 @@
+{
+  "pricing": {
+    "currency": "PHP",
+    "priceLabel": "Inquire for price"
+  },
+  "admin": {
+    "status": "available",
+    "featured": false,
+    "order": 99
+  },
+  "title": "₱4.5M Solo-Titled Property in Villa Libertad, El Nido, Palawan",
+  "slug": "villalibertad-elnido-09092601",
+  "media": {
+    "gallery": [
+      "/images/listings/villalibertad-elnido-09092601/villa_libertad03.png",
+      "/images/listings/villalibertad-elnido-09092601/villa_libertad02.png",
+      "/images/listings/villalibertad-elnido-09092601/villa_libertad01.png"
+    ],
+    "heroImage": "/images/listings/villalibertad-elnido-09092601/villa_libertad03.png"
+  },
+  "copy": {
+    "shortDescription": "₱4.5M ONLY! Solo-titled property for sale in Villa Libertad, El Nido, Palawan. Strategically located near Lio Estate, Charlie’s Hotel, and 86 Gourmet Restaurant - ideal for a vacation home, rental property, or long-term investment.",
+    "description": [
+      "Looking for an investment opportunity in El Nido, Palawan?\n\nThis solo-titled property in Villa Libertad is strategically located near the Lio Estate area, with convenient access to establishments such as Charlie’s Hotel and 86 Gourmet Restaurant.\n\nThe property offers an excellent opportunity for those looking to build a private residence, vacation home, rental accommodation, or tourism-related business, subject to applicable zoning and permits.\n\n📍 Location: Villa Libertad, El Nido, Palawan\n💰 Price: ₱4,500,000\n📜 Title: Solo Title\n📌 Near: Lio Estate • Charlie’s Hotel • 86 Gourmet Restaurant\n\nSecure your own piece of El Nido and take advantage of the area's continued growth and tourism potential.\n\n📩 Send us a message for the exact location, lot details, documents, and viewing schedule."
+    ]
+  },
+  "where": {
+    "location": "Palawan",
+    "propertyType": "Residential Lot"
+  }
+}
