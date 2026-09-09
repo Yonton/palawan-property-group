@@ -1,0 +1,33 @@
+{
+  "pricing": {
+    "currency": "PHP",
+    "priceLabel": "Inquire for price"
+  },
+  "admin": {
+    "status": "available",
+    "featured": false,
+    "order": 99
+  },
+  "title": "Find Your Space in El Nido, Palawan | Property & Investment Opportunities",
+  "slug": "lio-elnido-09092601",
+  "media": {
+    "heroImage": "/images/listings/lio-elnido-09092601/al002.png",
+    "gallery": [
+      "/images/listings/lio-elnido-09092601/al001.png",
+      "/images/listings/lio-elnido-09092601/al002.png",
+      "/images/listings/lio-elnido-09092601/al003.png",
+      "/images/listings/lio-elnido-09092601/al004.png",
+      "/images/listings/lio-elnido-09092601/al005.png"
+    ]
+  },
+  "copy": {
+    "shortDescription": "Discover property opportunities in Lio El Nido, Palawan, from peaceful countryside settings to coastal and island locations. Invest, build, and grow in one of the Philippines’ most sought-after tourism destinations, with the continued development of Lio Estate adding to the area’s long-term appeal",
+    "description": [
+      "FIND YOUR SPACE IN EL NIDO, PALAWAN 🌴\n\nLooking to own land, build a home, or invest in El Nido?\n\nPalawan Property Group offers property opportunities across selected areas of El Nido, Palawan, from naturally green inland locations to coastal and island settings.\n\nEl Nido continues to evolve as a major tourism destination, while developments such as Lio Estate are creating an integrated environment for tourism, hospitality, commercial activity, residential communities, and leisure. Lio is Ayala Land’s master-planned tourism estate in El Nido, designed around the area’s natural landscape and sustainable development principles.\n\nWith Lio featuring hotels, restaurants, shops, leisure facilities, transportation infrastructure, and expanding mixed-use opportunities, the surrounding areas of El Nido present compelling possibilities for buyers looking at the long-term potential of Palawan real estate.\n\nWhether you're looking for:\n\n🌴 A tropical home or private retreat\n🏡 A vacation property\n🏨 A tourism or hospitality project\n📈 A long-term land investment\n🌊 A property close to El Nido's natural attractions\n\nThere may be a place for you in El Nido.\n\n📍 Selected locations across El Nido, Palawan\n📩 Contact Palawan Property Group for available properties, prices, exact locations, title status, and viewing schedules.\n\nPalawan Property Group\nYour Gateway to a Brighter Palawan 🌴"
+    ]
+  },
+  "where": {
+    "location": "Palawan",
+    "propertyType": "Investment"
+  }
+}
