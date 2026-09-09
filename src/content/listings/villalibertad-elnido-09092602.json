@@ -1,0 +1,31 @@
+{
+  "pricing": {
+    "currency": "PHP",
+    "priceLabel": "Inquire for price"
+  },
+  "admin": {
+    "status": "available",
+    "featured": false,
+    "order": 99
+  },
+  "title": "500 SQM Titled Property for Sale in Villa Libertad, El Nido, Palawan | ₱8,000/SQM",
+  "slug": "villalibertad-elnido-09092602",
+  "media": {
+    "gallery": [
+      "/images/listings/villalibertad-elnido-09092602/vl_003.png",
+      "/images/listings/villalibertad-elnido-09092602/vl002.png",
+      "/images/listings/villalibertad-elnido-09092602/vl_001.png"
+    ],
+    "heroImage": "/images/listings/villalibertad-elnido-09092602/vl_003.png"
+  },
+  "copy": {
+    "shortDescription": "500 SQM titled property for sale in Villa Libertad, El Nido, Palawan, priced at ₱8,000 per sqm. Surrounded by mature trees and lush greenery, offering a peaceful setting with potential for residential use or investment.",
+    "description": [
+      "Own a piece of El Nido, Palawan in the peaceful and naturally green area of Villa Libertad.\n\nThis 500-square-meter titled property is surrounded by mature trees and tropical vegetation, providing a serene environment away from the busier areas while remaining accessible.\n\nAt ₱8,000 per square meter, the property is an excellent opportunity for buyers looking to build a private residence, vacation home, or investment property in El Nido.\n\n🌴 Property Details:\n📍 Villa Libertad, El Nido, Palawan\n📐 500 SQM\n📜 Titled Property\n💰 ₱8,000 per SQM\n🌿 Naturally green & peaceful surroundings\n🏡 Ideal for residential use or investment\n\n📩 Message Palawan Property Group for the exact location, complete property details, documents, and viewing schedule."
+    ]
+  },
+  "where": {
+    "location": "Palawan",
+    "propertyType": "Residential Lot"
+  }
+}
